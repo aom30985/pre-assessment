@@ -653,15 +653,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(4px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .empty-attachments-message {
@@ -870,15 +863,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .attached-file-thumbnail-container {
@@ -1148,7 +1134,7 @@
             height: 150px;
             background-color: #ffffff;
             border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             position: relative;
             transform: rotate(-2deg);
             transition: all 0.5s ease;
@@ -1162,11 +1148,8 @@
         .scanner-document-preview::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
             pointer-events: none;
         }
 
@@ -1178,14 +1161,12 @@
             border-radius: 2px;
             margin-bottom: 2px;
         }
-
         .doc-line {
             height: 3px;
             background: #e2e8f0;
             border-radius: 1px;
             width: 100%;
         }
-
         .doc-line.half {
             width: 50%;
         }
@@ -1213,17 +1194,9 @@
         }
 
         @keyframes laserSweep {
-            0% {
-                top: 0%;
-            }
-
-            50% {
-                top: 100%;
-            }
-
-            100% {
-                top: 0%;
-            }
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
         }
 
         .scanner-status {
@@ -1303,7 +1276,7 @@
         .color-btn.active {
             border-color: #0f172a;
             transform: scale(1.15);
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 1), 0 0 4px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 0 0 1px rgba(255,255,255,1), 0 0 4px rgba(0,0,0,0.15);
         }
 
         .brush-size-btn {
@@ -1319,8 +1292,7 @@
             transition: all 0.2s;
         }
 
-        .brush-size-btn:hover,
-        .brush-size-btn.active {
+        .brush-size-btn:hover, .brush-size-btn.active {
             border-color: var(--accent-color);
             background-color: #eff6ff;
             color: var(--accent-color);
@@ -1355,8 +1327,7 @@
             height: 14px;
         }
 
-        .toolbar-btn-action:hover,
-        .toolbar-btn-action.active {
+        .toolbar-btn-action:hover, .toolbar-btn-action.active {
             border-color: var(--accent-color);
             background-color: #eff6ff;
             color: var(--accent-color);
@@ -1372,15 +1343,14 @@
             align-items: center;
             justify-content: center;
             padding: 16px;
-            background-color: #0f172a;
-            /* dark background */
+            background-color: #0f172a; /* dark background */
             overflow: auto;
             position: relative;
         }
 
         .canvas-wrapper {
             position: relative;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
             background-color: #ffffff;
             max-width: 100%;
             max-height: 100%;
@@ -1433,16 +1403,13 @@
             overflow-x: auto;
             flex: 1;
             min-width: 0;
-            scrollbar-width: thin;
-            /* Firefox */
-            scrollbar-color: #cbd5e1 transparent;
-            /* Firefox */
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: #cbd5e1 transparent; /* Firefox */
             padding-bottom: 4px;
         }
-
+        
         .vitals-tabs-container::-webkit-scrollbar {
-            height: 4px;
-            /* Thin scrollbar */
+            height: 4px; /* Thin scrollbar */
             display: block;
         }
 
@@ -1474,8 +1441,7 @@
             cursor: pointer;
             user-select: none;
             transition: all 0.2s;
-            flex-shrink: 0;
-            /* Prevent tabs from shrinking */
+            flex-shrink: 0; /* Prevent tabs from shrinking */
         }
 
         .vitals-tab-btn:hover {
@@ -1526,8 +1492,7 @@
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s;
-            flex-shrink: 0;
-            /* Prevent add button from shrinking */
+            flex-shrink: 0; /* Prevent add button from shrinking */
         }
 
         .btn-add-tab-square:hover {
@@ -1548,8 +1513,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-shrink: 0;
-            /* Prevent actions panel from shrinking */
+            flex-shrink: 0; /* Prevent actions panel from shrinking */
         }
 
         .btn-vitals-action {
@@ -1630,17 +1594,10 @@
             display: none;
             animation: slideDown 0.2s ease-out;
         }
-
+        
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .bp-reference-title {
@@ -1665,7 +1622,7 @@
             border-bottom: 1px dashed #f1f5f9;
             padding-bottom: 3px;
         }
-
+        
         .bp-reference-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
@@ -1678,7 +1635,7 @@
             align-items: center;
             gap: 6px;
         }
-
+        
         .bp-age-group::before {
             content: '•';
             color: var(--accent-color);
@@ -1697,20 +1654,17 @@
             font-size: 12px;
             text-align: left;
         }
-
         .vitals-history-table th {
             padding: 10px 8px;
             font-weight: 600;
             color: var(--text-muted);
             border-bottom: 2px solid var(--border-color);
         }
-
         .vitals-history-table td {
             padding: 10px 8px;
             border-bottom: 1px solid #edf2f7;
             color: var(--text-main);
         }
-
         .vitals-history-table tr:hover {
             background-color: #f8fafc;
         }
@@ -1744,7 +1698,6 @@
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             pointer-events: none;
         }
-
         .toast-notification.show {
             transform: translateY(0);
             opacity: 1;
@@ -1767,9 +1720,9 @@
                 ฟอร์มคัดกรองผู้ป่วย
             </div>
             <div class="header-actions">
-                <a href="index.html" class="btn-switch-version active">V.1 (ปกติ)</a>
+                <a href="index.html" class="btn-switch-version">V.1 (ปกติ)</a>
                 <a href="pre-assessment2.html" class="btn-switch-version">V.2 (รวม Vital & Metric)</a>
-                <a href="pre-assessment3.html" class="btn-switch-version">V.3 (Vital แบบแถว)</a>
+                <a href="pre-assessment3.html" class="btn-switch-version active">V.3 (Vital แบบแถว)</a>
                 <span class="status-text">
                     <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -1817,74 +1770,61 @@
         </section>
         <!-- 2. Vital signs -->
         <section class="section" id="vitalsSection">
-            <div class="section-header">
+            <div class="section-header" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" id="vitalsSectionHeader">
                 <div class="section-title">Vital signs <span class="required">*</span></div>
+                <svg id="vitalsCollapseIcon" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="transition: transform 0.2s;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                </svg>
             </div>
 
-            <!-- Tab Navigation Header Row -->
-            <div class="vitals-tab-header-row">
-                <div class="vitals-tabs-container" id="vitalsTabsList">
-                    <!-- Tabs will be rendered here dynamically -->
+            <div class="vitals-section-body" id="vitalsSectionBody">
+                <!-- BP Reference Guidelines Card -->
+                <div class="bp-reference-card" id="bpReferenceCard" style="display: none; margin-bottom: 12px;">
+                    <div class="bp-reference-title">เกณฑ์ระดับความดันโลหิตอ้างอิงตามกลุ่มอายุ (Blood Pressure Guidelines)</div>
+                    <div class="bp-reference-list">
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Newborn up to 1 month</span>
+                            <span class="bp-value-range">Between 60/20 mmHg and 90/60 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Baby 1-11 months</span>
+                            <span class="bp-value-range">Between 87/53 mmHg and 105/66 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Toddler 1-3 years</span>
+                            <span class="bp-value-range">Between 95/52 mmHg and 105/66 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Children aged 3-5 years</span>
+                            <span class="bp-value-range">Between 95/56 mmHg and 110/70 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Children aged 6-12 years</span>
+                            <span class="bp-value-range">Between 97/57 mmHg and 112/71 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Teenagers aged 13-18 years</span>
+                            <span class="bp-value-range">Between 112/66 mmHg and 128/80 mmHg</span>
+                        </div>
+                        <div class="bp-reference-item">
+                            <span class="bp-age-group">Adults and elderly</span>
+                            <span class="bp-value-range">Between 90/60 mmHg and 120/80 mmHg</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="vitals-header-actions">
-                    <a href="#" class="section-subtitle-link" id="btnToggleBPHints">แสดงคำอธิบายเพิ่มเติม</a>
-                    <button class="btn-vitals-action" id="btnUseLatestVitals" type="button">ใช้ข้อมูลล่าสุด (ภายใน 24
-                        ชั่วโมง)</button>
-                    <button class="btn-vitals-action btn-icon-vitals" id="btnVitalsHistory" type="button"
-                        title="ประวัติการวัดสัญญาณชีพ">
-                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                            style="display: block; margin: auto;">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                <div class="vitals-rows-container" id="vitalsRowsContainer">
+                    <!-- Dynamic rows will be rendered here by JavaScript -->
+                </div>
+
+                <div style="margin-top: 12px;">
+                    <button class="btn-add" id="btnAddVitalsRow" type="button" style="background: none; border: none; color: var(--accent-color); font-weight: 500; display: inline-flex; align-items: center; gap: 4px; padding: 4px 0; cursor: pointer;">
+                        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
                         </svg>
+                        เพิ่มรายการ
                     </button>
                 </div>
-            </div>
-
-            <!-- BP Reference Guidelines Card -->
-            <div class="bp-reference-card" id="bpReferenceCard">
-                <div class="bp-reference-title">เกณฑ์ระดับความดันโลหิตอ้างอิงตามกลุ่มอายุ (Blood Pressure Guidelines)
-                </div>
-                <div class="bp-reference-list">
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Newborn up to 1 month</span>
-                        <span class="bp-value-range">Between 60/20 mmHg and 90/60 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Baby 1-11 months</span>
-                        <span class="bp-value-range">Between 87/53 mmHg and 105/66 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Toddler 1-3 years</span>
-                        <span class="bp-value-range">Between 95/52 mmHg and 105/66 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Children aged 3-5 years</span>
-                        <span class="bp-value-range">Between 95/56 mmHg and 110/70 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Children aged 6-12 years</span>
-                        <span class="bp-value-range">Between 97/57 mmHg and 112/71 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Teenagers aged 13-18 years</span>
-                        <span class="bp-value-range">Between 112/66</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Teenagers aged 13-18 years</span>
-                        <span class="bp-value-range">Between 112/66 mmHg and 128/80 mmHg</span>
-                    </div>
-                    <div class="bp-reference-item">
-                        <span class="bp-age-group">Adults and elderly</span>
-                        <span class="bp-value-range">Between 90/60 mmHg and 120/80 mmHg</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab Contents Container -->
-            <div id="vitalsTabContentContainer">
-                <!-- Injected dynamically via Javascript -->
             </div>
         </section>
         <!-- 3. Body metric -->
@@ -2219,40 +2159,32 @@
         <section class="section attachment-section">
             <div class="section-header">
                 <div class="section-title">
-                    <svg style="width: 14px; height: 14px; color: var(--accent-color); margin-right: 4px; display: inline-block; vertical-align: text-bottom;"
-                        fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z">
-                        </path>
+                    <svg style="width: 14px; height: 14px; color: var(--accent-color); margin-right: 4px; display: inline-block; vertical-align: text-bottom;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
                     </svg>
                     เอกสารแนบประกอบการคัดกรอง
                 </div>
             </div>
-
+            
             <div class="attachment-table-header">
                 <div>ชื่อฟอร์ม/เอกสาร</div>
                 <div>บันทึกย่อ (โน๊ตสั้นๆ ไม่เกิน 500 ตัวอักษร)</div>
                 <div>เอกสารแนบ (PDF, PNG, JPG)</div>
                 <div style="text-align: center;">จัดการ</div>
             </div>
-
+            
             <div class="attachment-list" id="attachmentList">
                 <!-- Rows will be injected here by Javascript -->
                 <div class="empty-attachments-message" id="emptyAttachmentsMsg">
-                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                        </path>
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                     ยังไม่มีการแนบเอกสาร กดปุ่มเพิ่มเอกสารแนบด้านล่างเพื่อเริ่มต้น
                 </div>
             </div>
-
+            
             <button class="btn-add mt-8" id="btnAddAttachment" type="button">
-                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
                 </svg>
                 เพิ่มเอกสารแนบ
@@ -2264,11 +2196,8 @@
         <div class="modal-card scanner-card">
             <div class="modal-header">
                 <div class="modal-title">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 4v1m6 11h2m-6 0h-2v4m0-16v3m0 0h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                        </path>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-16v3m0 0h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                     เครื่องสแกนเอกสารจำลอง (Scanner Simulation)
                 </div>
@@ -2281,8 +2210,7 @@
                         <div class="doc-line"></div>
                         <div class="doc-line"></div>
                         <div class="doc-line half"></div>
-                        <div
-                            style="border: 1px dashed #cbd5e1; height: 35px; margin-top: 10px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 7px; color: #94a3b8; font-weight: 500;">
+                        <div style="border: 1px dashed #cbd5e1; height: 35px; margin-top: 10px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 7px; color: #94a3b8; font-weight: 500;">
                             ประทับตราโรงพยาบาล
                         </div>
                         <div class="doc-line" style="margin-top: 10px;"></div>
@@ -2307,11 +2235,8 @@
         <div class="modal-card">
             <div class="modal-header">
                 <div class="modal-title">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                        </path>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                     </svg>
                     วาดเขียนและอธิบายประกอบเอกสาร (Annotation Tool)
                 </div>
@@ -2321,43 +2246,29 @@
                 <div class="annotation-toolbar">
                     <div class="toolbar-section">
                         <span class="toolbar-label">สีปากกา</span>
-                        <div class="color-btn active" style="background-color: #ef4444;" data-color="#ef4444"
-                            title="แดง"></div>
-                        <div class="color-btn" style="background-color: #2563eb;" data-color="#2563eb" title="น้ำเงิน">
-                        </div>
-                        <div class="color-btn" style="background-color: #10b981;" data-color="#10b981" title="เขียว">
-                        </div>
+                        <div class="color-btn active" style="background-color: #ef4444;" data-color="#ef4444" title="แดง"></div>
+                        <div class="color-btn" style="background-color: #2563eb;" data-color="#2563eb" title="น้ำเงิน"></div>
+                        <div class="color-btn" style="background-color: #10b981;" data-color="#10b981" title="เขียว"></div>
                         <div class="color-btn" style="background-color: #000000;" data-color="#000000" title="ดำ"></div>
                     </div>
                     <div style="height: 1px; width: 60%; background-color: #e2e8f0;"></div>
                     <div class="toolbar-section">
                         <span class="toolbar-label">ขนาดเส้น</span>
-                        <button class="brush-size-btn active" data-size="3" title="บาง">
-                            <div class="brush-dot" style="width: 4px; height: 4px;"></div>
-                        </button>
-                        <button class="brush-size-btn" data-size="6" title="ปานกลาง">
-                            <div class="brush-dot" style="width: 8px; height: 8px;"></div>
-                        </button>
-                        <button class="brush-size-btn" data-size="12" title="หนา">
-                            <div class="brush-dot" style="width: 14px; height: 14px;"></div>
-                        </button>
+                        <button class="brush-size-btn active" data-size="3" title="บาง"><div class="brush-dot" style="width: 4px; height: 4px;"></div></button>
+                        <button class="brush-size-btn" data-size="6" title="ปานกลาง"><div class="brush-dot" style="width: 8px; height: 8px;"></div></button>
+                        <button class="brush-size-btn" data-size="12" title="หนา"><div class="brush-dot" style="width: 14px; height: 14px;"></div></button>
                     </div>
                     <div style="height: 1px; width: 60%; background-color: #e2e8f0;"></div>
                     <div class="toolbar-section" style="margin-top: auto;">
                         <button class="toolbar-btn-action" id="btnEraser" title="ยางลบ">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                </path>
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
                             ยางลบ
                         </button>
                         <button class="toolbar-btn-action" id="btnClearCanvas" title="ล้างทั้งหมด">
-                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.2M7 9a7 7 0 1111-5.71V9"></path>
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.2M7 9a7 7 0 1111-5.71V9"></path>
                             </svg>
                             ล้างวาด
                         </button>
@@ -2367,12 +2278,7 @@
                     <div class="canvas-wrapper">
                         <canvas id="annotationCanvas"></canvas>
                         <div class="annotation-hint">
-                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                             คลิกเมาส์ค้างและลากเพื่อวาดเขียนทับเอกสารได้เลย
                         </div>
                     </div>
@@ -2390,48 +2296,36 @@
         <div class="modal-card" style="max-width: 460px;">
             <div class="modal-body" style="align-items: center; text-align: center; padding: 30px 20px;">
                 <!-- Animated Success Checkmark -->
-                <div
-                    style="width: 54px; height: 54px; border-radius: 50%; background-color: #d1fae5; color: #10b981; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);">
-                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
+                <div style="width: 54px; height: 54px; border-radius: 50%; background-color: #d1fae5; color: #10b981; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
                     </svg>
                 </div>
-                <h3 style="font-size: 15px; font-weight: 700; color: var(--primary-color); margin-bottom: 6px;">
-                    บันทึกข้อมูลคัดกรองสำเร็จ</h3>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
-                    ระบบได้ตรวจสอบและบันทึกรายงานคัดกรองเรียบร้อยแล้ว</p>
-
-                <div
-                    style="width: 100%; text-align: left; background-color: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
-                    <div
-                        style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--primary-color); margin-bottom: 6px;">บันทึกข้อมูลคัดกรองสำเร็จ</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">ระบบได้ตรวจสอบและบันทึกรายงานคัดกรองเรียบร้อยแล้ว</p>
+                
+                <div style="width: 100%; text-align: left; background-color: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
                         <span style="color: var(--text-muted); font-weight: 500;">ระดับ Triage:</span>
                         <span id="summaryTriage" style="font-weight: 700;"></span>
                     </div>
-                    <div
-                        style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
                         <span style="color: var(--text-muted); font-weight: 500;">สัญญาณชีพ (Vital Signs):</span>
                         <span id="summaryVitals" style="font-weight: 600;"></span>
                     </div>
-                    <div
-                        style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
                         <span style="color: var(--text-muted); font-weight: 500;">โรคประจำตัว:</span>
-                        <span id="summaryDiseases"
-                            style="font-weight: 600; text-align: right; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></span>
+                        <span id="summaryDiseases" style="font-weight: 600; text-align: right; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></span>
                     </div>
-                    <div
-                        style="display: flex; justify-content: flex-start; flex-direction: column; gap: 4px; padding-top: 2px;">
+                    <div style="display: flex; justify-content: flex-start; flex-direction: column; gap: 4px; padding-top: 2px;">
                         <span style="color: var(--text-muted); font-weight: 600;">รายการเอกสารแนบที่บันทึก:</span>
-                        <div id="summaryAttachments"
-                            style="display: flex; flex-direction: column; gap: 2px; padding-left: 6px; color: var(--text-main); font-family: monospace; font-size: 10px;">
+                        <div id="summaryAttachments" style="display: flex; flex-direction: column; gap: 2px; padding-left: 6px; color: var(--text-main); font-family: monospace; font-size: 10px;">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer" style="justify-content: center; padding: 12px 20px;">
-                <button class="btn-modal btn-modal-primary" onclick="closeSuccessModal()"
-                    style="width: 100px;">ตกลง</button>
+                <button class="btn-modal btn-modal-primary" onclick="closeSuccessModal()" style="width: 100px;">ตกลง</button>
             </div>
         </div>
     </div>
@@ -2441,31 +2335,25 @@
         <div class="modal-card" style="max-width: 400px;">
             <div class="modal-header">
                 <div class="modal-title" style="color: #ef4444; display: flex; align-items: center; gap: 8px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                        </path>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                     </svg>
                     ยืนยันการลบการวัดสัญญาณชีพ
                 </div>
                 <button class="modal-close" onclick="closeConfirmDeleteModal()">&times;</button>
             </div>
-            <div class="modal-body"
-                style="padding: 20px; text-align: left; background-color: #ffffff; display: flex; flex-direction: column; gap: 12px;">
+            <div class="modal-body" style="padding: 20px; text-align: left; background-color: #ffffff; display: flex; flex-direction: column; gap: 12px;">
                 <p style="font-size: 13px; color: var(--text-main); line-height: 1.5;">
                     แท็บรอบการวัดนี้มีข้อมูลสัญญาณชีพที่กรอกไว้แล้ว
                 </p>
                 <p style="font-size: 12px; color: #ef4444; font-weight: 500; margin-bottom: 4px;">
                     ข้อมูลในแท็บนี้จะสูญหายอย่างถาวร โปรดระบุเหตุผลในการลบเพื่อดำเนินการต่อ:
                 </p>
-
+                
                 <div class="form-group">
-                    <label style="font-weight: 600; margin-bottom: 2px;">เหตุผลการลบ <span
-                            class="required">*</span></label>
+                    <label style="font-weight: 600; margin-bottom: 2px;">เหตุผลการลบ <span class="required">*</span></label>
                     <div class="input-wrapper" style="height: 30px;">
-                        <select id="deleteVitalsReasonSelect"
-                            style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px; cursor: pointer; background: transparent;">
+                        <select id="deleteVitalsReasonSelect" style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px; cursor: pointer; background: transparent;">
                             <option value="" disabled selected>-- เลือกเหตุผลการลบ --</option>
                             <option value="error">กรอกข้อมูลผิดพลาด / ซ้ำซ้อน</option>
                             <option value="refused">ผู้ป่วยปฏิเสธการวัดหรือยกเลิก</option>
@@ -2476,18 +2364,15 @@
                 </div>
 
                 <div class="form-group" id="deleteVitalsOtherReasonGroup" style="display: none;">
-                    <label style="font-weight: 600; margin-bottom: 2px;">ระบุเหตุผลเพิ่มเติม <span
-                            class="required">*</span></label>
+                    <label style="font-weight: 600; margin-bottom: 2px;">ระบุเหตุผลเพิ่มเติม <span class="required">*</span></label>
                     <div class="input-wrapper" style="height: 30px;">
-                        <input type="text" id="deleteVitalsOtherReasonInput" placeholder="ระบุเหตุผลอื่นๆ..."
-                            style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px;">
+                        <input type="text" id="deleteVitalsOtherReasonInput" placeholder="ระบุเหตุผลอื่นๆ..." style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px;">
                     </div>
                 </div>
             </div>
             <div class="modal-footer" style="background-color: #f8fafc; gap: 8px;">
                 <button class="btn-modal btn-modal-secondary" onclick="closeConfirmDeleteModal()">ยกเลิก</button>
-                <button class="btn-modal btn-modal-primary" id="btnConfirmDeleteVitals"
-                    style="background-color: #ef4444; color: #ffffff;" disabled>ยืนยันลบข้อมูล</button>
+                <button class="btn-modal btn-modal-primary" id="btnConfirmDeleteVitals" style="background-color: #ef4444; color: #ffffff;" disabled>ยืนยันลบข้อมูล</button>
             </div>
         </div>
     </div>
@@ -2497,10 +2382,8 @@
         <div class="modal-card" style="max-width: 680px;">
             <div class="modal-header">
                 <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     ตารางเปรียบเทียบผลการวัดสัญญาณชีพ
                 </div>
@@ -2525,8 +2408,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="vitalsHistoryEmptyMsg"
-                    style="display: none; text-align: center; padding: 24px; color: var(--text-muted); font-style: italic;">
+                <div id="vitalsHistoryEmptyMsg" style="display: none; text-align: center; padding: 24px; color: var(--text-muted); font-style: italic;">
                     ไม่มีข้อมูลสัญญาณชีพที่วัด
                 </div>
             </div>
@@ -2618,158 +2500,125 @@
             // Setup Chief Complaint Tags Click-to-Append
             setupChiefComplaintTags();
 
-            // Setup Vitals History Modal trigger
-            const btnVitalsHistory = document.getElementById('btnVitalsHistory');
-            if (btnVitalsHistory) {
-                btnVitalsHistory.addEventListener('click', openVitalsHistoryModal);
-            }
-
-            // Setup Delete Vitals Modal validation listeners
-            const reasonSelect = document.getElementById('deleteVitalsReasonSelect');
-            const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
-            if (reasonSelect) {
-                reasonSelect.addEventListener('change', validateDeleteVitalsReason);
-            }
-            if (otherInput) {
-                otherInput.addEventListener('input', validateDeleteVitalsReason);
-            }
-
-            // Initialize Vital Signs Tab system
-            initVitalsTabs();
-
-            // Toggle BP guidelines reference card
-            const btnToggleBPHints = document.getElementById('btnToggleBPHints');
-            const bpCard = document.getElementById('bpReferenceCard');
-            if (btnToggleBPHints && bpCard) {
-                btnToggleBPHints.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    if (bpCard.style.display === 'none' || bpCard.style.display === '') {
-                        bpCard.style.display = 'block';
-                        btnToggleBPHints.textContent = 'ย่อคำอธิบายเพิ่มเติม';
-                    } else {
-                        bpCard.style.display = 'none';
-                        btnToggleBPHints.textContent = 'แสดงคำอธิบายเพิ่มเติม';
-                    }
-                });
-            }
+            // Initialize Vital Signs Rows layout
+            initVitalsSection();
         });
 
-        // Initialize Vital Signs Tabs
-        function initVitalsTabs() {
-            const contentContainer = document.getElementById('vitalsTabContentContainer');
-            contentContainer.innerHTML = '';
+        // Initialize Vital Signs Rows
+        function initVitalsSection() {
+            renderVitalsRows();
 
-            // Render first tab panel
-            const panelDiv = document.createElement('div');
-            panelDiv.innerHTML = generateVitalsPanelHTML(vitalsState[0]);
-            const panelEl = panelDiv.firstElementChild;
-            contentContainer.appendChild(panelEl);
-            attachInputListeners(panelEl, vitalsState[0]);
-
-            renderVitalsTabs();
-            showActiveVitalsPanel();
-        }
-
-        // Render tab headers List
-        function renderVitalsTabs() {
-            const container = document.getElementById('vitalsTabsList');
-            if (!container) return;
-            container.innerHTML = '';
-
-            vitalsState.forEach((item, index) => {
-                const tabBtn = document.createElement('div');
-                tabBtn.className = `vitals-tab-btn ${activeVitalsTabId === item.id ? 'active' : ''}`;
-                tabBtn.setAttribute('data-tab-id', item.id);
-
-                const label = document.createElement('span');
-                label.textContent = `ครั้งที่ ${index + 1}`;
-                tabBtn.appendChild(label);
-
-                // Close button (x) only for the latest tab
-                if (index > 0 && index === vitalsState.length - 1) {
-                    const closeBtn = document.createElement('button');
-                    closeBtn.className = 'btn-close-tab';
-                    closeBtn.type = 'button';
-                    closeBtn.innerHTML = '&times;';
-                    closeBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        deleteVitalsTab(item.id);
-                    });
-                    tabBtn.appendChild(closeBtn);
-                }
-
-                tabBtn.addEventListener('click', () => {
-                    switchVitalsTab(item.id);
+            // Section Collapse Toggle
+            const header = document.getElementById('vitalsSectionHeader');
+            const body = document.getElementById('vitalsSectionBody');
+            const icon = document.getElementById('vitalsCollapseIcon');
+            if (header && body && icon) {
+                header.addEventListener('click', () => {
+                    const isCollapsed = body.style.display === 'none';
+                    body.style.display = isCollapsed ? 'block' : 'none';
+                    icon.style.transform = isCollapsed ? 'rotate(0deg)' : 'rotate(-90deg)';
                 });
+            }
 
-                container.appendChild(tabBtn);
+            // Add Vitals Row
+            const btnAdd = document.getElementById('btnAddVitalsRow');
+            if (btnAdd) {
+                btnAdd.addEventListener('click', addVitalsRow);
+            }
+        }
+
+        // Render Vitals Rows
+        function renderVitalsRows() {
+            const container = document.getElementById('vitalsRowsContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+            vitalsState.forEach((item, index) => {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'vitals-row-item';
+                rowDiv.setAttribute('data-id', item.id);
+                rowDiv.style.borderBottom = '1px solid #f1f5f9';
+                rowDiv.style.paddingBottom = '12px';
+                rowDiv.style.marginBottom = '12px';
+
+                rowDiv.innerHTML = `
+                    <!-- Row Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-weight: 600; font-size: 12px; color: var(--primary-color);">วัดครั้งที่ ${index + 1}</span>
+                            <button class="btn-vitals-action" type="button" onclick="useLatestVitalsRow('${item.id}')" style="background: none; border: none; color: var(--accent-color); font-size: 11px; cursor: pointer; padding: 0;">ใช้ข้อมูลล่าสุด (ภายใน 24 ชั่วโมง)</button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <a href="#" class="section-subtitle-link" onclick="toggleBPHintsRow(event)" style="font-size: 11px;">แสดงคำอธิบายเพิ่มเติม</a>
+                            ${index > 0 ? `
+                            <button type="button" class="btn-delete-vitals-row" onclick="deleteVitalsRow('${item.id}')" style="background: none; border: none; color: #ef4444; cursor: pointer; display: inline-flex; align-items: center; gap: 2px; font-size: 11px; padding: 0;">
+                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                                ลบรายการ
+                            </button>` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Row Fields Grid -->
+                    <div class="vitals-row-fields-grid" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr 1.5fr; gap: 10px; align-items: flex-end;">
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">BP (mmHg)</label>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <input type="number" class="systolic-input" placeholder="systolic" value="${item.systolic || ''}" oninput="updateVitalsField('${item.id}', 'systolic', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                                <span style="color: var(--text-muted); font-size: 12px;">/</span>
+                                <input type="number" class="diastolic-input" placeholder="diastolic" value="${item.diastolic || ''}" oninput="updateVitalsField('${item.id}', 'diastolic', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">PR (/min)</label>
+                            <input type="number" class="pr-input" placeholder="PR" value="${item.pr || ''}" oninput="updateVitalsField('${item.id}', 'pr', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">RR (/min)</label>
+                            <input type="number" class="rr-input" placeholder="RR" value="${item.rr || ''}" oninput="updateVitalsField('${item.id}', 'rr', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Temp</label>
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <input type="number" step="0.1" class="temp-input" placeholder="Temp" value="${item.temp || ''}" oninput="updateVitalsField('${item.id}', 'temp', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                                <select class="temp-unit-select" onchange="updateVitalsField('${item.id}', 'tempUnit', this.value)" style="border: 1px solid var(--border-color); border-radius: 4px; padding: 0 4px; font-size: 12px; height: 26px; background-color: #ffffff; cursor: pointer; width: 55px; min-width: 55px;">
+                                    <option value="C" ${item.tempUnit === 'C' ? 'selected' : ''}>°C</option>
+                                    <option value="F" ${item.tempUnit === 'F' ? 'selected' : ''}>°F</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">SpO2 (%)</label>
+                            <input type="number" class="spo2-input" placeholder="SpO2" value="${item.spo2 || ''}" oninput="updateVitalsField('${item.id}', 'spo2', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px 8px; font-size: 12px; height: 26px;">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 10px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px;">Pain score</label>
+                            <select class="pain-score-select" onchange="updateVitalsField('${item.id}', 'painScore', this.value)" style="width: 100%; border: 1px solid var(--border-color); border-radius: 4px; padding: 0 8px; font-size: 12px; height: 26px; background-color: #ffffff; cursor: pointer;">
+                                <option value="unspecified" ${item.painScore === 'unspecified' ? 'selected' : ''}>ไม่ระบุ</option>
+                                <option value="0" ${item.painScore === '0' ? 'selected' : ''}>0</option>
+                                <option value="1" ${item.painScore === '1' ? 'selected' : ''}>1</option>
+                                <option value="2" ${item.painScore === '2' ? 'selected' : ''}>2</option>
+                                <option value="3" ${item.painScore === '3' ? 'selected' : ''}>3</option>
+                                <option value="4" ${item.painScore === '4' ? 'selected' : ''}>4</option>
+                                <option value="5" ${item.painScore === '5' ? 'selected' : ''}>5</option>
+                                <option value="6" ${item.painScore === '6' ? 'selected' : ''}>6</option>
+                                <option value="7" ${item.painScore === '7' ? 'selected' : ''}>7</option>
+                                <option value="8" ${item.painScore === '8' ? 'selected' : ''}>8</option>
+                                <option value="9" ${item.painScore === '9' ? 'selected' : ''}>9</option>
+                                <option value="10" ${item.painScore === '10' ? 'selected' : ''}>10</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(rowDiv);
             });
-
-            // '+' add tab button
-            const addBtn = document.createElement('button');
-            addBtn.className = 'btn-add-tab-square';
-            addBtn.type = 'button';
-            addBtn.innerHTML = `
-                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
-                </svg>
-            `;
-            addBtn.addEventListener('click', addNewVitalsTab);
-            container.appendChild(addBtn);
-
-            updateAddTabButtonState();
         }
 
-        function showToast(message, type = 'error') {
-            let toast = document.getElementById('customToast');
-            if (!toast) {
-                toast = document.createElement('div');
-                toast.id = 'customToast';
-                document.body.appendChild(toast);
-            }
-            toast.className = `toast-notification show`;
-            if (type === 'error') {
-                toast.style.backgroundColor = '#ef4444';
-            } else {
-                toast.style.backgroundColor = '#10b981';
-            }
-            toast.innerHTML = `
-                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                </svg>
-                <span>${message}</span>
-            `;
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        function updateAddTabButtonState() {
-            const addBtn = document.querySelector('.btn-add-tab-square');
-            if (!addBtn) return;
-
-            const latestTab = vitalsState[vitalsState.length - 1];
-            if (latestTab && !hasVitalsData(latestTab)) {
-                addBtn.disabled = true;
-                addBtn.title = "กรุณากรอกข้อมูลสัญญาณชีพในรอบปัจจุบันก่อนเพิ่มรอบใหม่";
-            } else {
-                addBtn.disabled = false;
-                addBtn.title = "เพิ่มรอบการวัดสัญญาณชีพ";
-            }
-        }
-
-        function addNewVitalsTab() {
-            // Check if current latest tab has data
-            const latestTab = vitalsState[vitalsState.length - 1];
-            if (latestTab && !hasVitalsData(latestTab)) {
-                showToast("กรุณากรอกข้อมูลสัญญาณชีพในรอบปัจจุบันก่อนเพิ่มรอบใหม่");
-                return;
-            }
-
-            const newId = 'vital-' + Date.now();
+        // Add Vitals Row
+        function addVitalsRow() {
             vitalsState.push({
-                id: newId,
+                id: 'vital-' + Date.now(),
                 systolic: '',
                 diastolic: '',
                 pr: '',
@@ -2779,308 +2628,58 @@
                 spo2: '',
                 painScore: 'unspecified'
             });
-            activeVitalsTabId = newId;
-
-            // Append new panel HTML
-            const contentContainer = document.getElementById('vitalsTabContentContainer');
-            const panelDiv = document.createElement('div');
-            panelDiv.innerHTML = generateVitalsPanelHTML(vitalsState[vitalsState.length - 1]);
-            const panelEl = panelDiv.firstElementChild;
-            contentContainer.appendChild(panelEl);
-            attachInputListeners(panelEl, vitalsState[vitalsState.length - 1]);
-
-            renderVitalsTabs();
-            showActiveVitalsPanel();
-
-            // Auto scroll container to show the latest tab
-            const container = document.getElementById('vitalsTabsList');
-            if (container) {
-                setTimeout(() => {
-                    container.scrollLeft = container.scrollWidth;
-                }, 50);
-            }
+            renderVitalsRows();
         }
 
-        function hasVitalsData(item) {
-            return !!(
-                item.systolic ||
-                item.diastolic ||
-                item.pr ||
-                item.rr ||
-                item.temp ||
-                item.spo2 ||
-                (item.painScore && item.painScore !== 'unspecified')
-            );
+        // Delete Vitals Row
+        function deleteVitalsRow(id) {
+            vitalsState = vitalsState.filter(v => v.id !== id);
+            renderVitalsRows();
         }
 
-        function validateDeleteVitalsReason() {
-            const select = document.getElementById('deleteVitalsReasonSelect');
-            const otherGroup = document.getElementById('deleteVitalsOtherReasonGroup');
-            const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
-            const confirmBtn = document.getElementById('btnConfirmDeleteVitals');
-
-            if (!select || !confirmBtn) return;
-
-            const val = select.value;
-            if (val === 'others') {
-                otherGroup.style.display = 'block';
-                if (otherInput && otherInput.value.trim() !== '') {
-                    confirmBtn.disabled = false;
-                } else {
-                    confirmBtn.disabled = true;
-                }
-            } else if (val) {
-                otherGroup.style.display = 'none';
-                confirmBtn.disabled = false;
-            } else {
-                otherGroup.style.display = 'none';
-                confirmBtn.disabled = true;
-            }
-        }
-
-        function deleteVitalsTab(id) {
-            if (vitalsState.length <= 1) return;
+        // Update Vitals State Field
+        function updateVitalsField(id, field, value) {
             const item = vitalsState.find(v => v.id === id);
-            if (!item) return;
-
-            if (hasVitalsData(item)) {
-                // Reset inputs inside confirm modal
-                const reasonSelect = document.getElementById('deleteVitalsReasonSelect');
-                const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
-                const otherGroup = document.getElementById('deleteVitalsOtherReasonGroup');
-                const confirmBtn = document.getElementById('btnConfirmDeleteVitals');
-
-                if (reasonSelect) reasonSelect.value = '';
-                if (otherInput) otherInput.value = '';
-                if (otherGroup) otherGroup.style.display = 'none';
-                if (confirmBtn) confirmBtn.disabled = true;
-
-                // Open confirm delete modal
-                const modal = document.getElementById('confirmDeleteVitalsModal');
-                modal.classList.add('open');
-
-                // Bind confirm button click (clone to prevent event listener build-up)
-                const newConfirmBtn = confirmBtn.cloneNode(true);
-                confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
-
-                newConfirmBtn.addEventListener('click', () => {
-                    executeDeleteVitalsTab(id);
-                    closeConfirmDeleteModal();
-                });
-            } else {
-                executeDeleteVitalsTab(id);
+            if (item) {
+                item[field] = value;
             }
         }
 
-        function executeDeleteVitalsTab(id) {
-            const index = vitalsState.findIndex(v => v.id === id);
-            if (index === -1) return;
-
-            vitalsState.splice(index, 1);
-
-            const panel = document.querySelector(`[data-tab-content-id="${id}"]`);
-            if (panel) panel.remove();
-
-            if (activeVitalsTabId === id) {
-                activeVitalsTabId = vitalsState[Math.max(0, index - 1)].id;
+        // Use Latest Vitals Row
+        function useLatestVitalsRow(id) {
+            const item = vitalsState.find(v => v.id === id);
+            if (item) {
+                item.systolic = '118';
+                item.diastolic = '78';
+                item.pr = '74';
+                item.rr = '16';
+                item.temp = '36.6';
+                item.tempUnit = 'C';
+                item.spo2 = '99';
+                item.painScore = '0';
+                
+                renderVitalsRows();
             }
-
-            renderVitalsTabs();
-            showActiveVitalsPanel();
         }
 
-        function closeConfirmDeleteModal() {
-            document.getElementById('confirmDeleteVitalsModal').classList.remove('open');
-        }
-
-        function openVitalsHistoryModal() {
-            const tableBody = document.getElementById('vitalsHistoryTableBody');
-            const emptyMsg = document.getElementById('vitalsHistoryEmptyMsg');
-            const table = document.querySelector('.vitals-history-table');
-
-            tableBody.innerHTML = '';
-
-            vitalsState.forEach((item, index) => {
-                const tr = document.createElement('tr');
-
-                // Format BP
-                let bpVal = '-';
-                if (item.systolic || item.diastolic) {
-                    bpVal = `${item.systolic || '-'}/${item.diastolic || '-'}`;
-                }
-
-                // Format temp
-                let tempVal = '-';
-                if (item.temp) {
-                    tempVal = `${item.temp}°${item.tempUnit || 'C'}`;
-                }
-
-                const prVal = item.pr ? `${item.pr} ครั้ง/นาที` : '-';
-                const rrVal = item.rr ? `${item.rr} ครั้ง/นาที` : '-';
-                const spo2Val = item.spo2 ? `${item.spo2}%` : '-';
-
-                let painVal = '-';
-                if (item.painScore && item.painScore !== 'unspecified') {
-                    painVal = item.painScore;
-                }
-
-                tr.innerHTML = `
-                    <td style="padding: 10px 8px; font-weight: 600; color: var(--accent-color);">ครั้งที่ ${index + 1}</td>
-                    <td style="padding: 10px 8px;">${bpVal}</td>
-                    <td style="padding: 10px 8px;">${prVal}</td>
-                    <td style="padding: 10px 8px;">${rrVal}</td>
-                    <td style="padding: 10px 8px;">${tempVal}</td>
-                    <td style="padding: 10px 8px;">${spo2Val}</td>
-                    <td style="padding: 10px 8px;">
-                        <span style="font-weight: 600; color: ${painVal !== '-' ? 'var(--text-main)' : 'var(--text-muted)'}">${painVal}</span>
-                    </td>
-                `;
-
-                tableBody.appendChild(tr);
-            });
-
-            if (vitalsState.length === 0) {
-                table.style.display = 'none';
-                emptyMsg.style.display = 'block';
-            } else {
-                table.style.display = 'table';
-                emptyMsg.style.display = 'none';
+        // Toggle BP hints
+        function toggleBPHintsRow(e) {
+            e.preventDefault();
+            const bpCard = document.getElementById('bpReferenceCard');
+            if (bpCard) {
+                const isHidden = bpCard.style.display === 'none' || bpCard.style.display === '';
+                bpCard.style.display = isHidden ? 'block' : 'none';
+                
+                // Toggle text of the clicked link
+                e.target.textContent = isHidden ? 'ย่อคำอธิบายเพิ่มเติม' : 'แสดงคำอธิบายเพิ่มเติม';
             }
-
-            document.getElementById('vitalsHistoryModal').classList.add('open');
-        }
-
-        function closeVitalsHistoryModal() {
-            document.getElementById('vitalsHistoryModal').classList.remove('open');
-        }
-
-        function switchVitalsTab(id) {
-            activeVitalsTabId = id;
-            renderVitalsTabs();
-            showActiveVitalsPanel();
-        }
-
-        function showActiveVitalsPanel() {
-            const panels = document.querySelectorAll('.vital-signs-tab-content');
-            panels.forEach(p => {
-                if (p.getAttribute('data-tab-content-id') === activeVitalsTabId) {
-                    p.classList.add('active');
-                } else {
-                    p.classList.remove('active');
-                }
-            });
-        }
-
-        function generateVitalsPanelHTML(item) {
-            const isUnspecified = item.painScore === 'unspecified';
-            let painButtonsHTML = '';
-
-            painButtonsHTML += `
-                <button type="button" class="pain-square-btn ${isUnspecified ? 'active' : ''}" data-value="unspecified" title="ไม่ระบุ">-</button>
-            `;
-
-            for (let i = 0; i <= 10; i++) {
-                const isActive = item.painScore === String(i);
-                painButtonsHTML += `
-                    <button type="button" class="pain-square-btn ${isActive ? 'active' : ''}" data-value="${i}">${i}</button>
-                `;
-            }
-
-            return `
-                <div class="vital-signs-tab-content" data-tab-content-id="${item.id}">
-                    <div class="grid-4">
-                        <div class="form-group">
-                            <label>Systolic</label>
-                            <div class="input-wrapper">
-                                <input type="number" class="vitals-input systolic-input" placeholder="เช่น 120" value="${item.systolic}">
-                                <span class="unit">mmHg</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Diastolic</label>
-                            <div class="input-wrapper">
-                                <input type="number" class="vitals-input diastolic-input" placeholder="เช่น 80" value="${item.diastolic}">
-                                <span class="unit">mmHg</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>PR</label>
-                            <div class="input-wrapper">
-                                <input type="number" class="vitals-input pr-input" placeholder="เช่น 72" value="${item.pr}">
-                                <span class="unit">/min</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>RR</label>
-                            <div class="input-wrapper">
-                                <input type="number" class="vitals-input rr-input" placeholder="เช่น 16" value="${item.rr}">
-                                <span class="unit">/min</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid-4 mt-8">
-                        <div class="form-group">
-                            <label>Temp</label>
-                            <div class="input-wrapper">
-                                <input type="number" step="0.1" class="vitals-input temp-input" placeholder="เช่น 36.5" value="${item.temp}">
-                                <select class="unit temp-unit-select" style="border: none; background: #f1f5f9; padding: 0 4px; font-size: 11px; cursor: pointer; height: 100%;">
-                                    <option value="C" ${item.tempUnit === 'C' ? 'selected' : ''}>°C</option>
-                                    <option value="F" ${item.tempUnit === 'F' ? 'selected' : ''}>°F</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>SpO2</label>
-                            <div class="input-wrapper">
-                                <input type="number" class="vitals-input spo2-input" placeholder="เช่น 98" value="${item.spo2}">
-                                <span class="unit">%</span>
-                            </div>
-                        </div>
-                        <div class="form-group" style="grid-column: span 2;">
-                            <label>Pain score</label>
-                            <div class="pain-score-container" style="margin-top: 2px;">
-                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                                    ${painButtonsHTML}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function attachInputListeners(panelEl, item) {
-            const sysIn = panelEl.querySelector('.systolic-input');
-            const diaIn = panelEl.querySelector('.diastolic-input');
-            const prIn = panelEl.querySelector('.pr-input');
-            const rrIn = panelEl.querySelector('.rr-input');
-            const tempIn = panelEl.querySelector('.temp-input');
-            const tempUnitSel = panelEl.querySelector('.temp-unit-select');
-            const spo2In = panelEl.querySelector('.spo2-input');
-
-            sysIn.addEventListener('input', (e) => { item.systolic = e.target.value; updateAddTabButtonState(); });
-            diaIn.addEventListener('input', (e) => { item.diastolic = e.target.value; updateAddTabButtonState(); });
-            prIn.addEventListener('input', (e) => { item.pr = e.target.value; updateAddTabButtonState(); });
-            rrIn.addEventListener('input', (e) => { item.rr = e.target.value; updateAddTabButtonState(); });
-            tempIn.addEventListener('input', (e) => { item.temp = e.target.value; updateAddTabButtonState(); });
-            tempUnitSel.addEventListener('change', (e) => { item.tempUnit = e.target.value; updateAddTabButtonState(); });
-            spo2In.addEventListener('input', (e) => { item.spo2 = e.target.value; updateAddTabButtonState(); });
-
-            panelEl.querySelectorAll('.pain-square-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    panelEl.querySelectorAll('.pain-square-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    item.painScore = btn.getAttribute('data-value');
-                    updateAddTabButtonState();
-                });
-            });
         }
 
         // Render the entire list of attachments
         function renderAttachments() {
             const listContainer = document.getElementById('attachmentList');
             const emptyMsg = document.getElementById('emptyAttachmentsMsg');
-
+            
             // Clear previous rows except empty message
             const rows = listContainer.querySelectorAll('.attachment-row');
             rows.forEach(r => r.remove());
@@ -3109,7 +2708,7 @@
                     </div>
                     <div class="searchable-select-dropdown"></div>
                 `;
-
+                
                 const inputWrapper = colFormName.querySelector('.searchable-select-input-wrapper');
                 const input = colFormName.querySelector('.search-input');
                 const dropdown = colFormName.querySelector('.searchable-select-dropdown');
@@ -3148,7 +2747,7 @@
 
                 function filterOptions(query) {
                     dropdown.innerHTML = '';
-                    const filtered = formMasterList.filter(f =>
+                    const filtered = formMasterList.filter(f => 
                         f.toLowerCase().includes(query.toLowerCase())
                     );
 
@@ -3180,7 +2779,7 @@
                 `;
                 const textarea = colNote.querySelector('.note-textarea');
                 const counter = colNote.querySelector('.note-counter');
-
+                
                 function updateCounter(len) {
                     counter.textContent = `${len} / 500`;
                     counter.className = 'note-counter';
@@ -3200,10 +2799,10 @@
                 // Column 3: Attach & Scan or File Card
                 const colFile = document.createElement('div');
                 colFile.className = 'file-action-container';
-
+                
                 if (item.file) {
                     const isImg = item.file.type.startsWith('image/');
-                    const thumbnailHTML = isImg
+                    const thumbnailHTML = isImg 
                         ? `<img src="${item.file.dataUrl}" class="attached-file-thumbnail">`
                         : `<svg class="attached-file-icon" width="16" height="16" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>`;
 
@@ -3219,7 +2818,7 @@
                             <button class="btn-remove-file" title="ลบไฟล์แนบนี้">&times;</button>
                         </div>
                     `;
-
+                    
                     colFile.querySelector('.attached-file-thumbnail-container').addEventListener('click', () => {
                         openAnnotationModal(item.id);
                     });
@@ -3247,19 +2846,19 @@
                         </div>
                         <input type="file" class="hidden-file-input" style="display: none;" accept="image/*,application/pdf">
                     `;
-
+                    
                     const fileInput = colFile.querySelector('.hidden-file-input');
                     colFile.querySelector('.btn-attach-trigger').addEventListener('click', () => fileInput.click());
-
+                    
                     fileInput.addEventListener('change', (e) => {
                         const file = e.target.files[0];
                         if (!file) return;
-
+                        
                         const reader = new FileReader();
-                        reader.onload = function (evt) {
+                        reader.onload = function(evt) {
                             let sizeStr = (file.size / 1024).toFixed(1) + " KB";
                             if (file.size > 1024 * 1024) sizeStr = (file.size / (1024 * 1024)).toFixed(1) + " MB";
-
+                            
                             item.file = {
                                 name: file.name,
                                 size: sizeStr,
@@ -3284,7 +2883,7 @@
                 colManage.style.justifyContent = 'center';
 
                 const isAnnotatable = item.file && (item.file.type.startsWith('image/') || item.file.type === 'application/pdf');
-
+                
                 colManage.innerHTML = `
                     <button class="btn-row-action btn-annotate" type="button" title="วาดเขียนทับเอกสาร (Annotation)" ${isAnnotatable ? '' : 'disabled style="opacity: 0.25; cursor: not-allowed;"'}>
                         <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -3330,7 +2929,7 @@
             screen.classList.remove('scanning');
             btn.disabled = false;
             btn.textContent = 'เริ่มสแกนเอกสาร';
-
+            
             modal.classList.add('open');
         }
 
@@ -3370,12 +2969,12 @@
 
                 if (progress >= totalSteps) {
                     clearInterval(timer);
-
+                    
                     // Scan Complete - Generate canvas document image
                     generateMockScannedDocument((dataUrl) => {
                         const scanName = `Scan_Report_${new Date().getTime().toString().slice(-5)}.png`;
                         const item = attachmentsState.find(a => a.id === currentScanningRowId);
-
+                        
                         if (item) {
                             item.file = {
                                 name: scanName,
@@ -3386,7 +2985,7 @@
                             };
                             renderAttachments();
                         }
-
+                        
                         setTimeout(() => {
                             closeScannerModal();
                         }, 300);
@@ -3442,7 +3041,7 @@
             ctx.fillStyle = '#1e293b';
             ctx.font = 'bold 13px "Noto Sans Thai", "Segoe UI", sans-serif';
             ctx.fillText('ข้อมูลผู้เข้ารับการตรวจ', 40, 140);
-
+            
             ctx.font = '12px "Noto Sans Thai", "Segoe UI", sans-serif';
             ctx.fillStyle = '#475569';
             ctx.fillText('ชื่อ-นามสกุล: คนไข้ ตัวอย่างทดลอง', 40, 170);
@@ -3491,7 +3090,7 @@
             ctx.fillStyle = '#475569';
             ctx.strokeRect(40, 455, 12, 12);
             ctx.fillText('ไม่มีไข้สูงเกิน 38 องศาเซลเซียส', 60, 466);
-
+            
             ctx.strokeRect(40, 485, 12, 12);
             ctx.beginPath();
             ctx.moveTo(40, 491);
@@ -3545,11 +3144,11 @@
             modal.classList.add('open');
 
             originalImage = new Image();
-            originalImage.onload = function () {
+            originalImage.onload = function() {
                 const container = document.querySelector('.annotation-canvas-container');
                 const maxW = Math.min(container.clientWidth - 40, 700);
                 const maxH = 400;
-
+                
                 let w = originalImage.width;
                 let h = originalImage.height;
 
@@ -3579,7 +3178,7 @@
             // PDF background
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+            
             ctx.strokeStyle = '#94a3b8';
             ctx.lineWidth = 1;
             ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
@@ -3628,7 +3227,7 @@
 
             isDrawing = false;
             isEraser = false;
-
+            
             document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector('.color-btn[data-color="#ef4444"]').classList.add('active');
             drawColor = '#ef4444';
@@ -3722,7 +3321,7 @@
                     isEraser = false;
                     document.getElementById('btnEraser').classList.remove('active');
                     document.querySelectorAll('.color-btn').forEach(c => c.classList.remove('active'));
-
+                    
                     btn.classList.add('active');
                     drawColor = btn.getAttribute('data-color');
                     ctx.strokeStyle = drawColor;
@@ -3762,7 +3361,7 @@
                 const item = attachmentsState.find(a => a.id === currentAnnotatingRowId);
                 if (item) {
                     const dataUrl = canvas.toDataURL("image/png");
-
+                    
                     let name = item.file.name;
                     if (!name.includes('_annotated')) {
                         const dot = name.lastIndexOf('.');
@@ -3797,7 +3396,7 @@
                         activeVitals.tempUnit = 'C';
                         activeVitals.spo2 = '99';
                         activeVitals.painScore = '0';
-
+                        
                         const activePanel = document.querySelector(`[data-tab-content-id="${activeVitalsTabId}"]`);
                         if (activePanel) {
                             activePanel.querySelector('.systolic-input').value = '118';
@@ -3807,7 +3406,7 @@
                             activePanel.querySelector('.temp-input').value = '36.6';
                             activePanel.querySelector('.temp-unit-select').value = 'C';
                             activePanel.querySelector('.spo2-input').value = '99';
-
+                            
                             activePanel.querySelectorAll('.pain-square-btn').forEach(b => {
                                 if (b.getAttribute('data-value') === '0') {
                                     b.classList.add('active');
@@ -3862,7 +3461,7 @@
                 });
 
                 document.getElementById('summaryTriage').textContent = triageVal;
-
+                
                 const triageColorMap = {
                     "1": "var(--triage-1)",
                     "2": "var(--triage-2)",
@@ -3874,15 +3473,15 @@
                     document.getElementById('summaryTriage').style.color = triageColorMap[selectedTriage.value];
                 }
 
-                document.getElementById('summaryVitals').innerHTML = vitalsSummary.length > 0
-                    ? vitalsSummary.join('<br>')
+                document.getElementById('summaryVitals').innerHTML = vitalsSummary.length > 0 
+                    ? vitalsSummary.join('<br>') 
                     : 'ไม่มีข้อมูล';
                 document.getElementById('summaryDiseases').textContent = diseases.join(', ') || 'ไม่มีประวัติ';
 
                 const summaryAttList = document.getElementById('summaryAttachments');
                 summaryAttList.innerHTML = '';
-
-                const non_empty_attachments = attachmentsState.filter(item =>
+                
+                const non_empty_attachments = attachmentsState.filter(item => 
                     (item.formName && item.formName.trim() !== '') || item.file || (item.note && item.note.trim() !== '')
                 );
 
@@ -3900,7 +3499,7 @@
 
                 // Show Success Modal
                 document.getElementById('successModal').classList.add('open');
-
+                
                 // Update status in header bar to saved
                 const statusText = document.querySelector('.status-text');
                 if (statusText) {
@@ -3921,13 +3520,13 @@
         function setupChiefComplaintTags() {
             const ccTextarea = document.getElementById('ccTextarea');
             if (!ccTextarea) return;
-
+            
             const tags = document.querySelectorAll('.cc-tags .cc-tag');
             tags.forEach(tag => {
                 tag.addEventListener('click', () => {
                     const currentVal = ccTextarea.value.trim();
                     const tagVal = tag.textContent.trim();
-
+                    
                     if (currentVal) {
                         ccTextarea.value = currentVal + ', ' + tagVal;
                     } else {

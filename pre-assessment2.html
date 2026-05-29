@@ -143,6 +143,11 @@
             color: var(--primary-hover);
         }
 
+        .btn-switch-version.active {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
         /* Section Styles */
         .section {
             border-bottom: 1px solid #edf2f7;
@@ -1715,12 +1720,9 @@
                 ฟอร์มคัดกรองผู้ป่วย
             </div>
             <div class="header-actions">
-                <a href="index.html" class="btn-switch-version">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"></path>
-                    </svg>
-                    สลับไปเวอร์ชั่นปกติ (V.1)
-                </a>
+                <a href="index.html" class="btn-switch-version">V.1 (ปกติ)</a>
+                <a href="pre-assessment2.html" class="btn-switch-version active">V.2 (รวม Vital & Metric)</a>
+                <a href="pre-assessment3.html" class="btn-switch-version">V.3 (Vital แบบแถว)</a>
                 <span class="status-text">
                     <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
