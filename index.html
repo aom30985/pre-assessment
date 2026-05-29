@@ -1,0 +1,3830 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ฟอร์มคัดกรองผู้ป่วย (Compact Design)</title>
+    <!-- Google Fonts: Inter & Noto Sans Thai -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --primary-hover: #172554;
+            --accent-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --input-bg: #ffffff;
+            --focus-ring: rgba(37, 99, 235, 0.2);
+
+            /* Triage Colors */
+            --triage-1: #ef4444;
+            /* Resuscitation */
+            --triage-2: #f97316;
+            /* Emergency */
+            --triage-3: #eab308;
+            /* Urgent */
+            --triage-4: #22c55e;
+            /* Semi-Urgent */
+            --triage-5: #3b82f6;
+            /* Non-Urgent */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans Thai', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+            font-size: 13px;
+            padding: 12px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .header-title svg {
+            width: 18px;
+            height: 18px;
+            color: var(--accent-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-text {
+            color: var(--text-muted);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-save {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-save:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-switch-version {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-switch-version:hover {
+            background-color: #eff6ff;
+            border-color: var(--primary-hover);
+            color: var(--primary-hover);
+        }
+
+        /* Section Styles */
+        .section {
+            border-bottom: 1px solid #edf2f7;
+            padding: 12px 16px;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .required {
+            color: #ef4444;
+            margin-left: 2px;
+        }
+
+        .section-subtitle-link {
+            font-size: 11px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .section-subtitle-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Grid Layouts for inputs */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Input Controls */
+        .input-wrapper {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--input-bg);
+            height: 30px;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--focus-ring);
+        }
+
+        .input-wrapper input,
+        .input-wrapper select {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 4px 8px;
+            font-size: 12px;
+            width: 100%;
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .input-wrapper select {
+            padding-right: 4px;
+            cursor: pointer;
+        }
+
+        .unit {
+            background-color: #f1f5f9;
+            border-left: 1px solid var(--border-color);
+            padding: 0 8px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        /* Mini Table for Previous Visits */
+        .info-bar {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 8px 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 6px;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Pain Score Row */
+        .pain-score-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pain-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .pain-options {
+            display: flex;
+            gap: 2px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #f1f5f9;
+            padding: 2px;
+        }
+
+        .pain-options input[type="radio"] {
+            display: none;
+        }
+
+        .pain-options label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 24px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 3px;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .pain-options label.unspecified {
+            width: auto;
+            padding: 0 8px;
+        }
+
+        .pain-options input[type="radio"]:checked+label {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .pain-options label:hover:not(.checked) {
+            background-color: #f1f5f9;
+        }
+
+        /* Checkbox & Radio Button Arrays */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 12px;
+            transition: border-color 0.15s;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .checkbox-item input[type="radio"] {
+            width: 14px;
+            height: 14px;
+            cursor: pointer;
+            accent-color: var(--accent-color);
+        }
+
+        /* Chief Complaint Textarea & Tags */
+        .cc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .cc-tag {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            font-weight: 500;
+            transition: all 0.1s;
+        }
+
+        .cc-tag:hover {
+            background-color: #dbeafe;
+        }
+
+        .textarea-wrapper {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .textarea-wrapper textarea {
+            width: 100%;
+            border: none;
+            outline: none;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 12px;
+            resize: vertical;
+            color: var(--text-main);
+        }
+
+        /* Dynamic Items (add item layout) */
+        .dynamic-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .dynamic-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dynamic-row .input-wrapper {
+            flex: 1;
+        }
+
+        .btn-add {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 0;
+            margin-top: 4px;
+        }
+
+        .btn-add:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .btn-delete:hover {
+            text-decoration: underline;
+        }
+
+        /* Segmented Control / Radio Buttons Group */
+        .segmented-control {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            background: #f1f5f9;
+            padding: 2px;
+            height: 30px;
+            width: max-content;
+        }
+
+        .segmented-control input[type="radio"] {
+            display: none;
+        }
+
+        .segmented-control label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 16px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 3px;
+            user-select: none;
+            height: 100%;
+            transition: all 0.15s;
+        }
+
+        .segmented-control input[type="radio"]:checked+label {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        /* Triage Segmented Control */
+        .triage-control {
+            display: flex;
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px;
+            background: #f1f5f9;
+            gap: 4px;
+        }
+
+        .triage-control input[type="radio"] {
+            display: none;
+        }
+
+        .triage-control label {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 4px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 3px;
+            border-top: 4px solid #cbd5e1;
+            transition: all 0.15s;
+            text-align: center;
+        }
+
+        .triage-control .triage-1 {
+            border-top-color: var(--triage-1);
+        }
+
+        .triage-control .triage-2 {
+            border-top-color: var(--triage-2);
+        }
+
+        .triage-control .triage-3 {
+            border-top-color: var(--triage-3);
+        }
+
+        .triage-control .triage-4 {
+            border-top-color: var(--triage-4);
+        }
+
+        .triage-control .triage-5 {
+            border-top-color: var(--triage-5);
+        }
+
+        .triage-control input[id="t-1"]:checked+label {
+            background-color: var(--triage-1);
+            color: #ffffff;
+            border-top-color: var(--triage-1);
+        }
+
+        .triage-control input[id="t-2"]:checked+label {
+            background-color: var(--triage-2);
+            color: #ffffff;
+            border-top-color: var(--triage-2);
+        }
+
+        .triage-control input[id="t-3"]:checked+label {
+            background-color: var(--triage-3);
+            color: #ffffff;
+            border-top-color: var(--triage-3);
+        }
+
+        .triage-control input[id="t-4"]:checked+label {
+            background-color: var(--triage-4);
+            color: #ffffff;
+            border-top-color: var(--triage-4);
+        }
+
+        .triage-control input[id="t-5"]:checked+label {
+            background-color: var(--triage-5);
+            color: #ffffff;
+            border-top-color: var(--triage-5);
+        }
+
+        /* Helper styles for spacing */
+        .mt-4 {
+            margin-top: 4px;
+        }
+
+        .mt-8 {
+            margin-top: 8px;
+        }
+
+        /* 9. Attachment Section Styling */
+        .attachment-section {
+            background-color: #ffffff;
+            border-top: 1.5px dashed var(--border-color);
+            margin-top: 15px;
+            padding-top: 16px;
+        }
+
+        .attachment-table-header {
+            display: grid;
+            grid-template-columns: 220px 1fr 200px 70px;
+            gap: 12px;
+            padding: 8px 12px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 6px 6px 0 0;
+            font-weight: 600;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .attachment-list {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            background-color: #ffffff;
+            min-height: 45px;
+        }
+
+        .attachment-row {
+            display: grid;
+            grid-template-columns: 220px 1fr 200px 70px;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid #edf2f7;
+            align-items: start;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .attachment-row:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .empty-attachments-message {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 12px;
+            gap: 6px;
+            font-style: italic;
+        }
+
+        /* Custom Searchable Dropdown */
+        .searchable-select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .searchable-select-input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #ffffff;
+            height: 30px;
+            padding: 0 8px;
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .searchable-select-input-wrapper:focus-within {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--focus-ring);
+        }
+
+        .searchable-select-input-wrapper input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 12px;
+            color: var(--text-main);
+            background: transparent;
+            cursor: text;
+            width: 100%;
+        }
+
+        .searchable-select-input-wrapper svg {
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+            transition: transform 0.2s;
+        }
+
+        .searchable-select-container.open .searchable-select-input-wrapper svg {
+            transform: rotate(180deg);
+        }
+
+        .searchable-select-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-height: 180px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .searchable-select-container.open .searchable-select-dropdown {
+            display: block;
+        }
+
+        .searchable-select-option {
+            padding: 8px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: background 0.15s;
+        }
+
+        .searchable-select-option:hover {
+            background-color: #f1f5f9;
+        }
+
+        .searchable-select-option.selected {
+            background-color: #eff6ff;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .searchable-select-no-results {
+            padding: 8px 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Note Input & Limit */
+        .note-input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .note-textarea {
+            width: 100%;
+            height: 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-size: 12px;
+            font-family: inherit;
+            color: var(--text-main);
+            resize: none;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .note-textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--focus-ring);
+        }
+
+        .note-counter {
+            align-self: flex-end;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .note-counter.limit-near {
+            color: #f97316;
+            font-weight: 500;
+        }
+
+        .note-counter.limit-reached {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        /* Attach & Scan Action Area */
+        .file-action-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .upload-options-group {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .btn-action-small {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            color: var(--text-main);
+        }
+
+        .btn-action-small:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-action-small.btn-primary-action {
+            background-color: #eff6ff;
+            border-color: #bfdbfe;
+            color: var(--accent-color);
+        }
+
+        .btn-action-small.btn-primary-action:hover {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        /* Attached File Card */
+        .attached-file-card {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            animation: slideIn 0.2s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .attached-file-thumbnail-container {
+            width: 32px;
+            height: 32px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #cbd5e1;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .attached-file-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .attached-file-icon {
+            color: var(--text-muted);
+        }
+
+        .attached-file-info {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .attached-file-name {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .attached-file-size {
+            font-size: 9px;
+            color: var(--text-muted);
+        }
+
+        /* Action Buttons (Annotate & Delete) */
+        .btn-row-action {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .btn-row-action:hover {
+            background-color: #f1f5f9;
+        }
+
+        .btn-row-action.btn-annotate {
+            color: var(--accent-color);
+        }
+
+        .btn-row-action.btn-annotate:hover {
+            background-color: #eff6ff;
+            color: var(--primary-hover);
+        }
+
+        .btn-row-action.btn-delete-row {
+            color: #ef4444;
+        }
+
+        .btn-row-action.btn-delete-row:hover {
+            background-color: #fef2f2;
+            color: #b91c1c;
+        }
+
+        /* File removal indicator inside card */
+        .btn-remove-file {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(239, 68, 68, 0.9);
+            color: #ffffff;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 8px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .attached-file-card:hover .btn-remove-file {
+            opacity: 1;
+        }
+
+        /* Common Modal Dialog Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.95);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-overlay.open .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ffffff;
+        }
+
+        .modal-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 20px;
+            line-height: 28px;
+        }
+
+        .modal-close:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-footer {
+            padding: 12px 20px;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background-color: #ffffff;
+        }
+
+        .btn-modal {
+            padding: 7px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-modal-secondary {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-modal-secondary:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .btn-modal-primary {
+            background-color: var(--accent-color);
+            border: none;
+            color: #ffffff;
+        }
+
+        .btn-modal-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Scanner Modal Specific Styles */
+        .scanner-card {
+            max-width: 420px;
+        }
+
+        .scanner-body {
+            align-items: center;
+            gap: 16px;
+            padding: 24px;
+        }
+
+        .scanner-screen {
+            width: 100%;
+            height: 220px;
+            background-color: #0f172a;
+            border-radius: 8px;
+            border: 2px solid #334155;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .scanner-document-preview {
+            width: 110px;
+            height: 150px;
+            background-color: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            position: relative;
+            transform: rotate(-2deg);
+            transition: all 0.5s ease;
+            overflow: hidden;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .scanner-document-preview::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+
+        /* Mock document text lines */
+        .doc-line-title {
+            height: 6px;
+            background: #cbd5e1;
+            width: 60%;
+            border-radius: 2px;
+            margin-bottom: 2px;
+        }
+        .doc-line {
+            height: 3px;
+            background: #e2e8f0;
+            border-radius: 1px;
+            width: 100%;
+        }
+        .doc-line.half {
+            width: 50%;
+        }
+
+        .scan-laser {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to bottom, rgba(34, 197, 94, 0), rgba(34, 197, 94, 0.9), rgba(34, 197, 94, 0));
+            box-shadow: 0 0 12px #22c55e, 0 0 4px #22c55e;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .scanning .scan-laser {
+            opacity: 1;
+            animation: laserSweep 1.5s ease-in-out infinite;
+        }
+
+        .scanning .scanner-document-preview {
+            filter: brightness(0.9) contrast(1.1);
+            transform: rotate(0deg) scale(1.03);
+        }
+
+        @keyframes laserSweep {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+
+        .scanner-status {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-top: 8px;
+        }
+
+        .scanner-progressbar {
+            width: 100%;
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .scanner-progress-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--accent-color);
+        }
+
+        /* Annotation Modal Specific Styles */
+        .annotation-body {
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .annotation-toolbar {
+            width: 65px;
+            background-color: #ffffff;
+            border-right: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            gap: 12px;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .toolbar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+        }
+
+        .toolbar-label {
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .color-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.15s, border-color 0.15s;
+            position: relative;
+        }
+
+        .color-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .color-btn.active {
+            border-color: #0f172a;
+            transform: scale(1.15);
+            box-shadow: 0 0 0 1px rgba(255,255,255,1), 0 0 4px rgba(0,0,0,0.15);
+        }
+
+        .brush-size-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .brush-size-btn:hover, .brush-size-btn.active {
+            border-color: var(--accent-color);
+            background-color: #eff6ff;
+            color: var(--accent-color);
+        }
+
+        .brush-dot {
+            background-color: currentColor;
+            border-radius: 50%;
+        }
+
+        .toolbar-btn-action {
+            width: 48px;
+            height: 38px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            font-size: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+            padding: 2px;
+        }
+
+        .toolbar-btn-action svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .toolbar-btn-action:hover, .toolbar-btn-action.active {
+            border-color: var(--accent-color);
+            background-color: #eff6ff;
+            color: var(--accent-color);
+        }
+
+        .toolbar-btn-action.active {
+            font-weight: 600;
+        }
+
+        .annotation-canvas-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background-color: #0f172a; /* dark background */
+            overflow: auto;
+            position: relative;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+            background-color: #ffffff;
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #annotationCanvas {
+            cursor: crosshair;
+            display: block;
+        }
+
+        .annotation-hint {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(2px);
+            color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        /* Vitals Tabs Nav & BP Reference Styles */
+        .vitals-tab-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 8px;
+            width: 100%;
+        }
+
+        .vitals-tabs-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            flex: 1;
+            min-width: 0;
+            scrollbar-width: thin; /* Firefox */
+            scrollbar-color: #cbd5e1 transparent; /* Firefox */
+            padding-bottom: 4px;
+        }
+        
+        .vitals-tabs-container::-webkit-scrollbar {
+            height: 4px; /* Thin scrollbar */
+            display: block;
+        }
+
+        .vitals-tabs-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .vitals-tabs-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        .vitals-tabs-container::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+
+        .vitals-tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            height: 28px;
+            border: 1px solid var(--border-color);
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevent tabs from shrinking */
+        }
+
+        .vitals-tab-btn:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+            color: var(--text-main);
+        }
+
+        .vitals-tab-btn.active {
+            border-color: var(--accent-color);
+            background-color: #ffffff;
+            color: var(--accent-color);
+            font-weight: 600;
+            box-shadow: 0 0 0 2px var(--focus-ring);
+        }
+
+        .btn-close-tab {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            transition: all 0.15s;
+            line-height: 12px;
+            margin-left: 2px;
+        }
+
+        .btn-close-tab:hover {
+            background-color: #fef2f2;
+            color: #ef4444;
+        }
+
+        .btn-add-tab-square {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: var(--text-muted);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0; /* Prevent add button from shrinking */
+        }
+
+        .btn-add-tab-square:hover {
+            border-color: var(--accent-color);
+            background-color: #eff6ff;
+            color: var(--accent-color);
+        }
+
+        .btn-add-tab-square:disabled {
+            background-color: #cbd5e1 !important;
+            color: #94a3b8 !important;
+            border-color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .vitals-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0; /* Prevent actions panel from shrinking */
+        }
+
+        .btn-vitals-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 28px;
+            font-size: 11px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            color: var(--text-main);
+            padding: 0 10px;
+        }
+
+        .btn-vitals-action:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-icon-vitals {
+            width: 28px;
+            padding: 0;
+        }
+
+        .pain-square-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--border-color);
+            background-color: #ffffff;
+            color: var(--text-main);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s;
+        }
+
+        .pain-square-btn:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .pain-square-btn.active {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background-color: #eff6ff;
+            font-weight: 600;
+            box-shadow: 0 0 0 1px var(--focus-ring);
+        }
+
+        .vital-signs-tab-content {
+            display: none;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .vital-signs-tab-content.active {
+            display: block;
+        }
+
+        /* BP Reference Guidelines Card */
+        .bp-reference-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            display: none;
+            animation: slideDown 0.2s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bp-reference-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 4px;
+        }
+
+        .bp-reference-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .bp-reference-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            border-bottom: 1px dashed #f1f5f9;
+            padding-bottom: 3px;
+        }
+        
+        .bp-reference-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .bp-age-group {
+            font-weight: 500;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .bp-age-group::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .bp-value-range {
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* Vitals History Table */
+        .vitals-history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+        .vitals-history-table th {
+            padding: 10px 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 2px solid var(--border-color);
+        }
+        .vitals-history-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #edf2f7;
+            color: var(--text-main);
+        }
+        .vitals-history-table tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Disabled Modal Button style */
+        .btn-modal:disabled {
+            background-color: #cbd5e1 !important;
+            color: #94a3b8 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        /* Toast notification */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ef4444;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 2000;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Header / Action bar -->
+        <header>
+            <div class="header-title">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                ฟอร์มคัดกรองผู้ป่วย
+            </div>
+            <div class="header-actions">
+                <a href="pre-assessment2.html" class="btn-switch-version">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"></path>
+                    </svg>
+                    สลับไปเวอร์ชั่นรวมสัญญาณชีพ (V.2)
+                </a>
+                <span class="status-text">
+                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    ยังไม่ได้บันทึก
+                </span>
+                <button class="btn-save">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                        </path>
+                    </svg>
+                    บันทึก
+                </button>
+            </div>
+        </header>
+        <!-- 1. การตรวจครั้งก่อน & ข้อมูลประวัติเดิม -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title">ข้อมูลการมาตรวจครั้งก่อน</div>
+            </div>
+            <div class="info-bar">
+                <div class="info-item">
+                    <span class="info-label">มาครั้งก่อนวันที่:</span>
+                    <span class="info-value">25/05/2569</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">มาครั้งที่:</span>
+                    <span class="info-value">ไม่มีข้อมูล</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">อาการครั้งที่แล้ว:</span>
+                    <span class="info-value">ปวดหลัง</span>
+                </div>
+                <div class="info-item" style="margin-left: auto;">
+                    <span class="info-label">มาตรวจครั้งที่:</span>
+                    <input type="text" value="1"
+                        style="width: 40px; border: 1px solid var(--border-color); border-radius: 3px; text-align: center; font-size: 11px; height: 20px;">
+                </div>
+            </div>
+        </section>
+        <!-- 2. Vital signs -->
+        <section class="section" id="vitalsSection">
+            <div class="section-header">
+                <div class="section-title">Vital signs <span class="required">*</span></div>
+            </div>
+
+            <!-- Tab Navigation Header Row -->
+            <div class="vitals-tab-header-row">
+                <div class="vitals-tabs-container" id="vitalsTabsList">
+                    <!-- Tabs will be rendered here dynamically -->
+                </div>
+                <div class="vitals-header-actions">
+                    <a href="#" class="section-subtitle-link" id="btnToggleBPHints">แสดงคำอธิบายเพิ่มเติม</a>
+                    <button class="btn-vitals-action" id="btnUseLatestVitals" type="button">ใช้ข้อมูลล่าสุด (ภายใน 24 ชั่วโมง)</button>
+                    <button class="btn-vitals-action btn-icon-vitals" id="btnVitalsHistory" type="button" title="ประวัติการวัดสัญญาณชีพ">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BP Reference Guidelines Card -->
+            <div class="bp-reference-card" id="bpReferenceCard">
+                <div class="bp-reference-title">เกณฑ์ระดับความดันโลหิตอ้างอิงตามกลุ่มอายุ (Blood Pressure Guidelines)</div>
+                <div class="bp-reference-list">
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Newborn up to 1 month</span>
+                        <span class="bp-value-range">Between 60/20 mmHg and 90/60 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Baby 1-11 months</span>
+                        <span class="bp-value-range">Between 87/53 mmHg and 105/66 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Toddler 1-3 years</span>
+                        <span class="bp-value-range">Between 95/52 mmHg and 105/66 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Children aged 3-5 years</span>
+                        <span class="bp-value-range">Between 95/56 mmHg and 110/70 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Children aged 6-12 years</span>
+                        <span class="bp-value-range">Between 97/57 mmHg and 112/71 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Teenagers aged 13-18 years</span>
+                        <span class="bp-value-range">Between 112/66</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Teenagers aged 13-18 years</span>
+                        <span class="bp-value-range">Between 112/66 mmHg and 128/80 mmHg</span>
+                    </div>
+                    <div class="bp-reference-item">
+                        <span class="bp-age-group">Adults and elderly</span>
+                        <span class="bp-value-range">Between 90/60 mmHg and 120/80 mmHg</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Contents Container -->
+            <div id="vitalsTabContentContainer">
+                <!-- Injected dynamically via Javascript -->
+            </div>
+        </section>
+        <!-- 3. Body metric -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title">Body metric</div>
+            </div>
+            <div class="grid-4">
+                <div class="form-group">
+                    <label>Weight</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.1" placeholder="น้ำหนัก">
+                        <span class="unit">kg</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Height</label>
+                    <div class="input-wrapper">
+                        <input type="number" placeholder="ส่วนสูง">
+                        <span class="unit">cm</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>BMI</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.01" placeholder="คำนวณอัตโนมัติ">
+                        <span class="unit">kg/m²</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>BSA</label>
+                    <div class="input-wrapper">
+                        <input type="number" step="0.01" placeholder="คำนวณอัตโนมัติ">
+                        <span class="unit">m²</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 4. Chief complaint -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title">Chief complaint <span class="required">*</span></div>
+            </div>
+
+            <!-- Quick recommendations -->
+            <div class="cc-tags">
+                <span class="cc-tag">ไข้หวัดใหญ่</span>
+                <span class="cc-tag">ไข้เลือดออก</span>
+                <span class="cc-tag">โควิด-19</span>
+                <span class="cc-tag">อาการปวดหลัง</span>
+                <span class="cc-tag">อาการปวดหัว</span>
+                <span class="cc-tag">อาการปวดท้อง</span>
+                <span class="cc-tag">อาการปวดคอ</span>
+                <span class="cc-tag">อาการปวดไหล่</span>
+                <span class="cc-tag">อาการปวดข้อ</span>
+                <span class="cc-tag">อาการปวดฟัน</span>
+                <span class="cc-tag">อาการปวดหู</span>
+                <span class="cc-tag">อาการปวดตา</span>
+                <span class="cc-tag">อาการปวดเข่า</span>
+            </div>
+            <div class="textarea-wrapper">
+                <textarea rows="2" id="ccTextarea" placeholder="ระบุสรุปอาการและอื่นๆ..."></textarea>
+            </div>
+        </section>
+        <!-- 5. Underlying Disease -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title">Underlying Disease <span class="required">*</span></div>
+            </div>
+            <!-- Quick Status Checkboxes -->
+            <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+                <label class="checkbox-item" style="padding: 4px 8px;">
+                    <input type="checkbox" name="disease_status" value="none">
+                    <span>ไม่มีประวัติโรคประจำตัว</span>
+                </label>
+                <label class="checkbox-item" style="padding: 4px 8px;">
+                    <input type="checkbox" name="disease_status" value="unknown">
+                    <span>ไม่ทราบ</span>
+                </label>
+            </div>
+            <!-- Common Diseases Grid (Compact List) -->
+            <div class="checkbox-grid">
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="HT">
+                    <span>โรคความดันโลหิตสูง</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="DLP">
+                    <span>โรคไขมันในเลือดสูง</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="IHD">
+                    <span>โรคหัวใจขาดเลือด</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="HF">
+                    <span>ภาวะหัวใจล้มเหลว</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Stroke">
+                    <span>โรคหลอดเลือดสมอง</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="DM">
+                    <span>โรคเบาหวาน</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Hypothyroid">
+                    <span>ภาวะพร่องฮอร์โมนไทรอยด์</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Hyperthyroid">
+                    <span>ภาวะต่อมไทรอยด์ทำงานเกิน</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Gout">
+                    <span>โรคเก๊าท์</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="COPD">
+                    <span>โรคปอดอุดกั้นเรื้อรัง</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Asthma">
+                    <span>โรคหอบหืด</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" name="disease" value="Anemia">
+                    <span>โรคโลหิตจาง</span>
+                </label>
+            </div>
+            <!-- Disease Table Section -->
+            <div style="margin-top: 10px;">
+                <label
+                    style="font-weight: 600; color: var(--text-main); font-size: 12px; display: block; margin-bottom: 4px;">โรคประจำตัวอื่นๆ
+                    ที่คีย์เพิ่มตอนนี้</label>
+                <div class="dynamic-list">
+                    <!-- Row 1 -->
+                    <div class="dynamic-row">
+                        <div class="input-wrapper" style="flex: 2;">
+                            <input type="text" placeholder="ชื่อการวินิจฉัย (Diagnosis name)">
+                        </div>
+                        <div class="input-wrapper">
+                            <select>
+                                <option value="" disabled selected>ความแม่นยำ</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Suspected">Suspected</option>
+                            </select>
+                        </div>
+                        <div class="input-wrapper">
+                            <select>
+                                <option value="" disabled selected>สถานะของโรค</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <button class="btn-delete">ลบรายการ</button>
+                    </div>
+                </div>
+                <button class="btn-add">
+                    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                    </svg>
+                    เพิ่มรายการโรคประจำตัว
+                </button>
+            </div>
+        </section>
+
+        <!-- 7. ประวัติการดื่มสุราและการสูบบุหรี่ -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-title">ประวัติการดื่มสุราและการสูบบุหรี่</div>
+            </div>
+
+            <!-- Alcohol Sub-section -->
+            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; margin-bottom: 8px;">
+                <div style="font-weight: 600; font-size: 12px; margin-bottom: 6px; color: var(--text-main);">
+                    ประวัติการดื่มสุรา</div>
+                <div class="checkbox-grid" style="margin-bottom: 8px;">
+                    <label class="checkbox-item">
+                        <input type="radio" name="alcohol_history" value="quit">
+                        <span>เคยดื่ม (เลิกแล้ว)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="alcohol_history" value="active">
+                        <span>เคยดื่ม (ดื่มอยู่)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="alcohol_history" value="never" checked>
+                        <span>ไม่เคยดื่ม</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="alcohol_history" value="unknown">
+                        <span>ไม่ทราบ</span>
+                    </label>
+                </div>
+                <div class="grid-4">
+                    <div class="form-group">
+                        <label>วันที่เริ่มดื่ม</label>
+                        <div class="input-wrapper">
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>วันที่เลิกดื่ม</label>
+                        <div class="input-wrapper">
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>จำนวน/ความถี่</label>
+                        <div class="input-wrapper">
+                            <input type="number" placeholder="เช่น 2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>หน่วยต่อเวลา</label>
+                        <div class="input-wrapper">
+                            <select>
+                                <option value="" disabled selected>เลือกหน่วย</option>
+                                <option value="day">แก้ว/วัน</option>
+                                <option value="week">แก้ว/สัปดาห์</option>
+                                <option value="month">แก้ว/เดือน</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Smoking Sub-section -->
+            <div style="border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px;">
+                <div style="font-weight: 600; font-size: 12px; margin-bottom: 6px; color: var(--text-main);">
+                    ประวัติการสูบบุหรี่</div>
+                <div class="checkbox-grid" style="margin-bottom: 8px;">
+                    <label class="checkbox-item">
+                        <input type="radio" name="smoke_history" value="quit">
+                        <span>เคยสูบ (เลิกแล้ว)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="smoke_history" value="active">
+                        <span>เคยสูบ (สูบอยู่)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="smoke_history" value="never" checked>
+                        <span>ไม่เคยสูบ</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="radio" name="smoke_history" value="unknown">
+                        <span>ไม่ทราบ</span>
+                    </label>
+                </div>
+                <div class="grid-4">
+                    <div class="form-group">
+                        <label>ประเภทบุหรี่</label>
+                        <div class="input-wrapper">
+                            <select>
+                                <option value="" disabled selected>เลือกประเภท</option>
+                                <option value="cigarette">บุหรี่ก้นกรอง</option>
+                                <option value="vape">บุหรี่ไฟฟ้า</option>
+                                <option value="cigar">ซิการ์</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>วันที่เริ่มสูบ</label>
+                        <div class="input-wrapper">
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>วันที่เลิกสูบ</label>
+                        <div class="input-wrapper">
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>จำนวนความถี่ต่อเวลา</label>
+                        <div class="input-wrapper">
+                            <input type="text" placeholder="เช่น 1 ซอง/วัน">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Fall Risk & Triage Level -->
+        <section class="section">
+            <div class="grid-2">
+                <div class="form-group">
+                    <div class="section-header" style="margin-bottom: 8px;">
+                        <div class="section-title">Fall risk</div>
+                    </div>
+                    <div class="segmented-control">
+                        <input type="radio" name="fall_risk" id="fr-none" value="none" checked>
+                        <label for="fr-none">ไม่มี</label>
+                        <input type="radio" name="fall_risk" id="fr-low" value="low">
+                        <label for="fr-low">ต่ำ</label>
+                        <input type="radio" name="fall_risk" id="fr-high" value="high">
+                        <label for="fr-high">สูง</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="section-header" style="margin-bottom: 8px;">
+                        <div class="section-title">Triage Level</div>
+                    </div>
+                    <div class="triage-control">
+                        <input type="radio" name="triage" id="t-1" value="1">
+                        <label for="t-1" class="triage-1">
+                            <span>(1) Resuscitation</span>
+                        </label>
+                        <input type="radio" name="triage" id="t-2" value="2">
+                        <label for="t-2" class="triage-2">
+                            <span>(2) Emergency</span>
+                        </label>
+                        <input type="radio" name="triage" id="t-3" value="3" checked>
+                        <label for="t-3" class="triage-3">
+                            <span>(3) Urgent</span>
+                        </label>
+                        <input type="radio" name="triage" id="t-4" value="4">
+                        <label for="t-4" class="triage-4">
+                            <span>(4) Semi-Urgent</span>
+                        </label>
+                        <input type="radio" name="triage" id="t-5" value="5">
+                        <label for="t-5" class="triage-5">
+                            <span>(5) Non-Urgent</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. เอกสารแนบประกอบการคัดกรอง -->
+        <section class="section attachment-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <svg style="width: 14px; height: 14px; color: var(--accent-color); margin-right: 4px; display: inline-block; vertical-align: text-bottom;" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"></path>
+                    </svg>
+                    เอกสารแนบประกอบการคัดกรอง
+                </div>
+            </div>
+            
+            <div class="attachment-table-header">
+                <div>ชื่อฟอร์ม/เอกสาร</div>
+                <div>บันทึกย่อ (โน๊ตสั้นๆ ไม่เกิน 500 ตัวอักษร)</div>
+                <div>เอกสารแนบ (PDF, PNG, JPG)</div>
+                <div style="text-align: center;">จัดการ</div>
+            </div>
+            
+            <div class="attachment-list" id="attachmentList">
+                <!-- Rows will be injected here by Javascript -->
+                <div class="empty-attachments-message" id="emptyAttachmentsMsg">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    ยังไม่มีการแนบเอกสาร กดปุ่มเพิ่มเอกสารแนบด้านล่างเพื่อเริ่มต้น
+                </div>
+            </div>
+            
+            <button class="btn-add mt-8" id="btnAddAttachment" type="button">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                </svg>
+                เพิ่มเอกสารแนบ
+            </button>
+        </section>
+    </div>
+    <!-- Scanner Modal -->
+    <div class="modal-overlay" id="scannerModal">
+        <div class="modal-card scanner-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-16v3m0 0h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    เครื่องสแกนเอกสารจำลอง (Scanner Simulation)
+                </div>
+                <button class="modal-close" onclick="closeScannerModal()">&times;</button>
+            </div>
+            <div class="modal-body scanner-body">
+                <div class="scanner-screen" id="scannerScreen">
+                    <div class="scanner-document-preview">
+                        <div class="doc-line-title"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line"></div>
+                        <div class="doc-line half"></div>
+                        <div style="border: 1px dashed #cbd5e1; height: 35px; margin-top: 10px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 7px; color: #94a3b8; font-weight: 500;">
+                            ประทับตราโรงพยาบาล
+                        </div>
+                        <div class="doc-line" style="margin-top: 10px;"></div>
+                        <div class="doc-line half"></div>
+                    </div>
+                    <div class="scan-laser"></div>
+                </div>
+                <div class="scanner-status" id="scannerStatus">พร้อมเชื่อมต่อเครื่องสแกน...</div>
+                <div class="scanner-progressbar">
+                    <div class="scanner-progress-fill" id="scannerProgressFill"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-secondary" onclick="closeScannerModal()">ยกเลิก</button>
+                <button class="btn-modal btn-modal-primary" id="btnStartScan">เริ่มสแกนเอกสาร</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Annotation Modal -->
+    <div class="modal-overlay" id="annotationModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                    </svg>
+                    วาดเขียนและอธิบายประกอบเอกสาร (Annotation Tool)
+                </div>
+                <button class="modal-close" onclick="closeAnnotationModal()">&times;</button>
+            </div>
+            <div class="modal-body annotation-body">
+                <div class="annotation-toolbar">
+                    <div class="toolbar-section">
+                        <span class="toolbar-label">สีปากกา</span>
+                        <div class="color-btn active" style="background-color: #ef4444;" data-color="#ef4444" title="แดง"></div>
+                        <div class="color-btn" style="background-color: #2563eb;" data-color="#2563eb" title="น้ำเงิน"></div>
+                        <div class="color-btn" style="background-color: #10b981;" data-color="#10b981" title="เขียว"></div>
+                        <div class="color-btn" style="background-color: #000000;" data-color="#000000" title="ดำ"></div>
+                    </div>
+                    <div style="height: 1px; width: 60%; background-color: #e2e8f0;"></div>
+                    <div class="toolbar-section">
+                        <span class="toolbar-label">ขนาดเส้น</span>
+                        <button class="brush-size-btn active" data-size="3" title="บาง"><div class="brush-dot" style="width: 4px; height: 4px;"></div></button>
+                        <button class="brush-size-btn" data-size="6" title="ปานกลาง"><div class="brush-dot" style="width: 8px; height: 8px;"></div></button>
+                        <button class="brush-size-btn" data-size="12" title="หนา"><div class="brush-dot" style="width: 14px; height: 14px;"></div></button>
+                    </div>
+                    <div style="height: 1px; width: 60%; background-color: #e2e8f0;"></div>
+                    <div class="toolbar-section" style="margin-top: auto;">
+                        <button class="toolbar-btn-action" id="btnEraser" title="ยางลบ">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            ยางลบ
+                        </button>
+                        <button class="toolbar-btn-action" id="btnClearCanvas" title="ล้างทั้งหมด">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.2M7 9a7 7 0 1111-5.71V9"></path>
+                            </svg>
+                            ล้างวาด
+                        </button>
+                    </div>
+                </div>
+                <div class="annotation-canvas-container">
+                    <div class="canvas-wrapper">
+                        <canvas id="annotationCanvas"></canvas>
+                        <div class="annotation-hint">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                            คลิกเมาส์ค้างและลากเพื่อวาดเขียนทับเอกสารได้เลย
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-secondary" onclick="closeAnnotationModal()">ยกเลิก</button>
+                <button class="btn-modal btn-modal-primary" id="btnSaveAnnotation">บันทึกทับเอกสาร</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card" style="max-width: 460px;">
+            <div class="modal-body" style="align-items: center; text-align: center; padding: 30px 20px;">
+                <!-- Animated Success Checkmark -->
+                <div style="width: 54px; height: 54px; border-radius: 50%; background-color: #d1fae5; color: #10b981; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="3.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path>
+                    </svg>
+                </div>
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--primary-color); margin-bottom: 6px;">บันทึกข้อมูลคัดกรองสำเร็จ</h3>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">ระบบได้ตรวจสอบและบันทึกรายงานคัดกรองเรียบร้อยแล้ว</p>
+                
+                <div style="width: 100%; text-align: left; background-color: #ffffff; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px; font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                        <span style="color: var(--text-muted); font-weight: 500;">ระดับ Triage:</span>
+                        <span id="summaryTriage" style="font-weight: 700;"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                        <span style="color: var(--text-muted); font-weight: 500;">สัญญาณชีพ (Vital Signs):</span>
+                        <span id="summaryVitals" style="font-weight: 600;"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #f1f5f9; padding-bottom: 4px;">
+                        <span style="color: var(--text-muted); font-weight: 500;">โรคประจำตัว:</span>
+                        <span id="summaryDiseases" style="font-weight: 600; text-align: right; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></span>
+                    </div>
+                    <div style="display: flex; justify-content: flex-start; flex-direction: column; gap: 4px; padding-top: 2px;">
+                        <span style="color: var(--text-muted); font-weight: 600;">รายการเอกสารแนบที่บันทึก:</span>
+                        <div id="summaryAttachments" style="display: flex; flex-direction: column; gap: 2px; padding-left: 6px; color: var(--text-main); font-family: monospace; font-size: 10px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center; padding: 12px 20px;">
+                <button class="btn-modal btn-modal-primary" onclick="closeSuccessModal()" style="width: 100px;">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Vitals Tab Modal -->
+    <div class="modal-overlay" id="confirmDeleteVitalsModal">
+        <div class="modal-card" style="max-width: 400px;">
+            <div class="modal-header">
+                <div class="modal-title" style="color: #ef4444; display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    ยืนยันการลบการวัดสัญญาณชีพ
+                </div>
+                <button class="modal-close" onclick="closeConfirmDeleteModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 20px; text-align: left; background-color: #ffffff; display: flex; flex-direction: column; gap: 12px;">
+                <p style="font-size: 13px; color: var(--text-main); line-height: 1.5;">
+                    แท็บรอบการวัดนี้มีข้อมูลสัญญาณชีพที่กรอกไว้แล้ว
+                </p>
+                <p style="font-size: 12px; color: #ef4444; font-weight: 500; margin-bottom: 4px;">
+                    ข้อมูลในแท็บนี้จะสูญหายอย่างถาวร โปรดระบุเหตุผลในการลบเพื่อดำเนินการต่อ:
+                </p>
+                
+                <div class="form-group">
+                    <label style="font-weight: 600; margin-bottom: 2px;">เหตุผลการลบ <span class="required">*</span></label>
+                    <div class="input-wrapper" style="height: 30px;">
+                        <select id="deleteVitalsReasonSelect" style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px; cursor: pointer; background: transparent;">
+                            <option value="" disabled selected>-- เลือกเหตุผลการลบ --</option>
+                            <option value="error">กรอกข้อมูลผิดพลาด / ซ้ำซ้อน</option>
+                            <option value="refused">ผู้ป่วยปฏิเสธการวัดหรือยกเลิก</option>
+                            <option value="malfunction">อุปกรณ์วัดเกิดความขัดข้อง</option>
+                            <option value="others">อื่นๆ (ระบุเหตุผลเพิ่มเติม)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="deleteVitalsOtherReasonGroup" style="display: none;">
+                    <label style="font-weight: 600; margin-bottom: 2px;">ระบุเหตุผลเพิ่มเติม <span class="required">*</span></label>
+                    <div class="input-wrapper" style="height: 30px;">
+                        <input type="text" id="deleteVitalsOtherReasonInput" placeholder="ระบุเหตุผลอื่นๆ..." style="width: 100%; border: none; outline: none; padding: 4px 8px; font-size: 12px;">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #f8fafc; gap: 8px;">
+                <button class="btn-modal btn-modal-secondary" onclick="closeConfirmDeleteModal()">ยกเลิก</button>
+                <button class="btn-modal btn-modal-primary" id="btnConfirmDeleteVitals" style="background-color: #ef4444; color: #ffffff;" disabled>ยืนยันลบข้อมูล</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vitals History Comparison Modal -->
+    <div class="modal-overlay" id="vitalsHistoryModal">
+        <div class="modal-card" style="max-width: 680px;">
+            <div class="modal-header">
+                <div class="modal-title" style="display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    ตารางเปรียบเทียบผลการวัดสัญญาณชีพ
+                </div>
+                <button class="modal-close" onclick="closeVitalsHistoryModal()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 16px; background-color: #ffffff;">
+                <div style="overflow-x: auto;">
+                    <table class="vitals-history-table">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color); background-color: #f8fafc;">
+                                <th style="padding: 10px 8px;">ครั้งที่</th>
+                                <th style="padding: 10px 8px;">ความดันโลหิต (mmHg)</th>
+                                <th style="padding: 10px 8px;">ชีพจร (PR)</th>
+                                <th style="padding: 10px 8px;">การหายใจ (RR)</th>
+                                <th style="padding: 10px 8px;">อุณหภูมิ (Temp)</th>
+                                <th style="padding: 10px 8px;">ออกซิเจน (SpO2)</th>
+                                <th style="padding: 10px 8px;">Pain Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vitalsHistoryTableBody">
+                            <!-- Injected dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="vitalsHistoryEmptyMsg" style="display: none; text-align: center; padding: 24px; color: var(--text-muted); font-style: italic;">
+                    ไม่มีข้อมูลสัญญาณชีพที่วัด
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-modal-secondary" onclick="closeVitalsHistoryModal()">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global State
+        const formMasterList = [
+            "ใบยินยอมรับการรักษา (Consent Form)",
+            "ใบรับรองแพทย์ (Medical Certificate)",
+            "ผลการตรวจห้องปฏิบัติการ (Lab Report)",
+            "ผลเอ็กซเรย์ (X-Ray Report)",
+            "สำเนาบัตรประชาชน (ID Card Copy)",
+            "หนังสือส่งตัวผู้ป่วย (Referral Letter)",
+            "ฟอร์มคัดกรองโควิด-19 (Covid-19 Screening Form)",
+            "ประวัติการรับวัคซีน (Vaccination Record)"
+        ];
+
+        let attachmentsState = [
+            { id: Date.now(), formName: '', note: '', file: null }
+        ];
+
+        // Vitals tab state
+        let vitalsState = [
+            {
+                id: 'vital-1',
+                systolic: '',
+                diastolic: '',
+                pr: '',
+                rr: '',
+                temp: '',
+                tempUnit: 'C',
+                spo2: '',
+                painScore: 'unspecified'
+            }
+        ];
+        let activeVitalsTabId = 'vital-1';
+
+        // Active row IDs for modals
+        let currentScanningRowId = null;
+        let currentAnnotatingRowId = null;
+
+        // Drawing state
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let drawColor = '#ef4444';
+        let drawSize = 3;
+        let isEraser = false;
+        let originalImage = null; // keeps original Image object for clear canvas
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial Render
+            renderAttachments();
+
+            // Event listener for adding new attachment
+            document.getElementById('btnAddAttachment').addEventListener('click', () => {
+                attachmentsState.push({
+                    id: Date.now(),
+                    formName: '',
+                    note: '',
+                    file: null
+                });
+                renderAttachments();
+            });
+
+            // Setup Scanner trigger
+            document.getElementById('btnStartScan').addEventListener('click', startScanningProcess);
+
+            // Close modals on clicking overlay backdrop
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', (e) => {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('open');
+                    }
+                });
+            });
+
+            // Setup Annotation controls
+            setupAnnotationTools();
+
+            // Setup Save Button
+            setupSaveButton();
+
+            // Setup Chief Complaint Tags Click-to-Append
+            setupChiefComplaintTags();
+
+            // Setup Vitals History Modal trigger
+            const btnVitalsHistory = document.getElementById('btnVitalsHistory');
+            if (btnVitalsHistory) {
+                btnVitalsHistory.addEventListener('click', openVitalsHistoryModal);
+            }
+
+            // Setup Delete Vitals Modal validation listeners
+            const reasonSelect = document.getElementById('deleteVitalsReasonSelect');
+            const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
+            if (reasonSelect) {
+                reasonSelect.addEventListener('change', validateDeleteVitalsReason);
+            }
+            if (otherInput) {
+                otherInput.addEventListener('input', validateDeleteVitalsReason);
+            }
+
+            // Initialize Vital Signs Tab system
+            initVitalsTabs();
+
+            // Toggle BP guidelines reference card
+            const btnToggleBPHints = document.getElementById('btnToggleBPHints');
+            const bpCard = document.getElementById('bpReferenceCard');
+            if (btnToggleBPHints && bpCard) {
+                btnToggleBPHints.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (bpCard.style.display === 'none' || bpCard.style.display === '') {
+                        bpCard.style.display = 'block';
+                        btnToggleBPHints.textContent = 'ย่อคำอธิบายเพิ่มเติม';
+                    } else {
+                        bpCard.style.display = 'none';
+                        btnToggleBPHints.textContent = 'แสดงคำอธิบายเพิ่มเติม';
+                    }
+                });
+            }
+        });
+
+        // Initialize Vital Signs Tabs
+        function initVitalsTabs() {
+            const contentContainer = document.getElementById('vitalsTabContentContainer');
+            contentContainer.innerHTML = '';
+            
+            // Render first tab panel
+            const panelDiv = document.createElement('div');
+            panelDiv.innerHTML = generateVitalsPanelHTML(vitalsState[0]);
+            const panelEl = panelDiv.firstElementChild;
+            contentContainer.appendChild(panelEl);
+            attachInputListeners(panelEl, vitalsState[0]);
+
+            renderVitalsTabs();
+            showActiveVitalsPanel();
+        }
+
+        // Render tab headers List
+        function renderVitalsTabs() {
+            const container = document.getElementById('vitalsTabsList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            vitalsState.forEach((item, index) => {
+                const tabBtn = document.createElement('div');
+                tabBtn.className = `vitals-tab-btn ${activeVitalsTabId === item.id ? 'active' : ''}`;
+                tabBtn.setAttribute('data-tab-id', item.id);
+                
+                const label = document.createElement('span');
+                label.textContent = `ครั้งที่ ${index + 1}`;
+                tabBtn.appendChild(label);
+
+                // Close button (x) only for the latest tab
+                if (index > 0 && index === vitalsState.length - 1) {
+                    const closeBtn = document.createElement('button');
+                    closeBtn.className = 'btn-close-tab';
+                    closeBtn.type = 'button';
+                    closeBtn.innerHTML = '&times;';
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteVitalsTab(item.id);
+                    });
+                    tabBtn.appendChild(closeBtn);
+                }
+
+                tabBtn.addEventListener('click', () => {
+                    switchVitalsTab(item.id);
+                });
+
+                container.appendChild(tabBtn);
+            });
+
+            // '+' add tab button
+            const addBtn = document.createElement('button');
+            addBtn.className = 'btn-add-tab-square';
+            addBtn.type = 'button';
+            addBtn.innerHTML = `
+                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                </svg>
+            `;
+            addBtn.addEventListener('click', addNewVitalsTab);
+            container.appendChild(addBtn);
+
+            updateAddTabButtonState();
+        }
+
+        function showToast(message, type = 'error') {
+            let toast = document.getElementById('customToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'customToast';
+                document.body.appendChild(toast);
+            }
+            toast.className = `toast-notification show`;
+            if (type === 'error') {
+                toast.style.backgroundColor = '#ef4444';
+            } else {
+                toast.style.backgroundColor = '#10b981';
+            }
+            toast.innerHTML = `
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+                <span>${message}</span>
+            `;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function updateAddTabButtonState() {
+            const addBtn = document.querySelector('.btn-add-tab-square');
+            if (!addBtn) return;
+
+            const latestTab = vitalsState[vitalsState.length - 1];
+            if (latestTab && !hasVitalsData(latestTab)) {
+                addBtn.disabled = true;
+                addBtn.title = "กรุณากรอกข้อมูลสัญญาณชีพในรอบปัจจุบันก่อนเพิ่มรอบใหม่";
+            } else {
+                addBtn.disabled = false;
+                addBtn.title = "เพิ่มรอบการวัดสัญญาณชีพ";
+            }
+        }
+
+        function addNewVitalsTab() {
+            // Check if current latest tab has data
+            const latestTab = vitalsState[vitalsState.length - 1];
+            if (latestTab && !hasVitalsData(latestTab)) {
+                showToast("กรุณากรอกข้อมูลสัญญาณชีพในรอบปัจจุบันก่อนเพิ่มรอบใหม่");
+                return;
+            }
+
+            const newId = 'vital-' + Date.now();
+            vitalsState.push({
+                id: newId,
+                systolic: '',
+                diastolic: '',
+                pr: '',
+                rr: '',
+                temp: '',
+                tempUnit: 'C',
+                spo2: '',
+                painScore: 'unspecified'
+            });
+            activeVitalsTabId = newId;
+
+            // Append new panel HTML
+            const contentContainer = document.getElementById('vitalsTabContentContainer');
+            const panelDiv = document.createElement('div');
+            panelDiv.innerHTML = generateVitalsPanelHTML(vitalsState[vitalsState.length - 1]);
+            const panelEl = panelDiv.firstElementChild;
+            contentContainer.appendChild(panelEl);
+            attachInputListeners(panelEl, vitalsState[vitalsState.length - 1]);
+
+            renderVitalsTabs();
+            showActiveVitalsPanel();
+
+            // Auto scroll container to show the latest tab
+            const container = document.getElementById('vitalsTabsList');
+            if (container) {
+                setTimeout(() => {
+                    container.scrollLeft = container.scrollWidth;
+                }, 50);
+            }
+        }
+
+        function hasVitalsData(item) {
+            return !!(
+                item.systolic || 
+                item.diastolic || 
+                item.pr || 
+                item.rr || 
+                item.temp || 
+                item.spo2 || 
+                (item.painScore && item.painScore !== 'unspecified')
+            );
+        }
+
+        function validateDeleteVitalsReason() {
+            const select = document.getElementById('deleteVitalsReasonSelect');
+            const otherGroup = document.getElementById('deleteVitalsOtherReasonGroup');
+            const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
+            const confirmBtn = document.getElementById('btnConfirmDeleteVitals');
+
+            if (!select || !confirmBtn) return;
+
+            const val = select.value;
+            if (val === 'others') {
+                otherGroup.style.display = 'block';
+                if (otherInput && otherInput.value.trim() !== '') {
+                    confirmBtn.disabled = false;
+                } else {
+                    confirmBtn.disabled = true;
+                }
+            } else if (val) {
+                otherGroup.style.display = 'none';
+                confirmBtn.disabled = false;
+            } else {
+                otherGroup.style.display = 'none';
+                confirmBtn.disabled = true;
+            }
+        }
+
+        function deleteVitalsTab(id) {
+            if (vitalsState.length <= 1) return;
+            const item = vitalsState.find(v => v.id === id);
+            if (!item) return;
+
+            if (hasVitalsData(item)) {
+                // Reset inputs inside confirm modal
+                const reasonSelect = document.getElementById('deleteVitalsReasonSelect');
+                const otherInput = document.getElementById('deleteVitalsOtherReasonInput');
+                const otherGroup = document.getElementById('deleteVitalsOtherReasonGroup');
+                const confirmBtn = document.getElementById('btnConfirmDeleteVitals');
+                
+                if (reasonSelect) reasonSelect.value = '';
+                if (otherInput) otherInput.value = '';
+                if (otherGroup) otherGroup.style.display = 'none';
+                if (confirmBtn) confirmBtn.disabled = true;
+
+                // Open confirm delete modal
+                const modal = document.getElementById('confirmDeleteVitalsModal');
+                modal.classList.add('open');
+
+                // Bind confirm button click (clone to prevent event listener build-up)
+                const newConfirmBtn = confirmBtn.cloneNode(true);
+                confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+                newConfirmBtn.addEventListener('click', () => {
+                    executeDeleteVitalsTab(id);
+                    closeConfirmDeleteModal();
+                });
+            } else {
+                executeDeleteVitalsTab(id);
+            }
+        }
+
+        function executeDeleteVitalsTab(id) {
+            const index = vitalsState.findIndex(v => v.id === id);
+            if (index === -1) return;
+
+            vitalsState.splice(index, 1);
+
+            const panel = document.querySelector(`[data-tab-content-id="${id}"]`);
+            if (panel) panel.remove();
+
+            if (activeVitalsTabId === id) {
+                activeVitalsTabId = vitalsState[Math.max(0, index - 1)].id;
+            }
+
+            renderVitalsTabs();
+            showActiveVitalsPanel();
+        }
+
+        function closeConfirmDeleteModal() {
+            document.getElementById('confirmDeleteVitalsModal').classList.remove('open');
+        }
+
+        function openVitalsHistoryModal() {
+            const tableBody = document.getElementById('vitalsHistoryTableBody');
+            const emptyMsg = document.getElementById('vitalsHistoryEmptyMsg');
+            const table = document.querySelector('.vitals-history-table');
+            
+            tableBody.innerHTML = '';
+            
+            vitalsState.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                
+                // Format BP
+                let bpVal = '-';
+                if (item.systolic || item.diastolic) {
+                    bpVal = `${item.systolic || '-'}/${item.diastolic || '-'}`;
+                }
+                
+                // Format temp
+                let tempVal = '-';
+                if (item.temp) {
+                    tempVal = `${item.temp}°${item.tempUnit || 'C'}`;
+                }
+                
+                const prVal = item.pr ? `${item.pr} ครั้ง/นาที` : '-';
+                const rrVal = item.rr ? `${item.rr} ครั้ง/นาที` : '-';
+                const spo2Val = item.spo2 ? `${item.spo2}%` : '-';
+                
+                let painVal = '-';
+                if (item.painScore && item.painScore !== 'unspecified') {
+                    painVal = item.painScore;
+                }
+                
+                tr.innerHTML = `
+                    <td style="padding: 10px 8px; font-weight: 600; color: var(--accent-color);">ครั้งที่ ${index + 1}</td>
+                    <td style="padding: 10px 8px;">${bpVal}</td>
+                    <td style="padding: 10px 8px;">${prVal}</td>
+                    <td style="padding: 10px 8px;">${rrVal}</td>
+                    <td style="padding: 10px 8px;">${tempVal}</td>
+                    <td style="padding: 10px 8px;">${spo2Val}</td>
+                    <td style="padding: 10px 8px;">
+                        <span style="font-weight: 600; color: ${painVal !== '-' ? 'var(--text-main)' : 'var(--text-muted)'}">${painVal}</span>
+                    </td>
+                `;
+                
+                tableBody.appendChild(tr);
+            });
+            
+            if (vitalsState.length === 0) {
+                table.style.display = 'none';
+                emptyMsg.style.display = 'block';
+            } else {
+                table.style.display = 'table';
+                emptyMsg.style.display = 'none';
+            }
+            
+            document.getElementById('vitalsHistoryModal').classList.add('open');
+        }
+
+        function closeVitalsHistoryModal() {
+            document.getElementById('vitalsHistoryModal').classList.remove('open');
+        }
+
+        function switchVitalsTab(id) {
+            activeVitalsTabId = id;
+            renderVitalsTabs();
+            showActiveVitalsPanel();
+        }
+
+        function showActiveVitalsPanel() {
+            const panels = document.querySelectorAll('.vital-signs-tab-content');
+            panels.forEach(p => {
+                if (p.getAttribute('data-tab-content-id') === activeVitalsTabId) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
+            });
+        }
+
+        function generateVitalsPanelHTML(item) {
+            const isUnspecified = item.painScore === 'unspecified';
+            let painButtonsHTML = '';
+            
+            painButtonsHTML += `
+                <button type="button" class="pain-square-btn ${isUnspecified ? 'active' : ''}" data-value="unspecified" title="ไม่ระบุ">-</button>
+            `;
+            
+            for (let i = 0; i <= 10; i++) {
+                const isActive = item.painScore === String(i);
+                painButtonsHTML += `
+                    <button type="button" class="pain-square-btn ${isActive ? 'active' : ''}" data-value="${i}">${i}</button>
+                `;
+            }
+
+            return `
+                <div class="vital-signs-tab-content" data-tab-content-id="${item.id}">
+                    <div class="grid-4">
+                        <div class="form-group">
+                            <label>Systolic</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="vitals-input systolic-input" placeholder="เช่น 120" value="${item.systolic}">
+                                <span class="unit">mmHg</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Diastolic</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="vitals-input diastolic-input" placeholder="เช่น 80" value="${item.diastolic}">
+                                <span class="unit">mmHg</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>PR</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="vitals-input pr-input" placeholder="เช่น 72" value="${item.pr}">
+                                <span class="unit">/min</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>RR</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="vitals-input rr-input" placeholder="เช่น 16" value="${item.rr}">
+                                <span class="unit">/min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-4 mt-8">
+                        <div class="form-group">
+                            <label>Temp</label>
+                            <div class="input-wrapper">
+                                <input type="number" step="0.1" class="vitals-input temp-input" placeholder="เช่น 36.5" value="${item.temp}">
+                                <select class="unit temp-unit-select" style="border: none; background: #f1f5f9; padding: 0 4px; font-size: 11px; cursor: pointer; height: 100%;">
+                                    <option value="C" ${item.tempUnit === 'C' ? 'selected' : ''}>°C</option>
+                                    <option value="F" ${item.tempUnit === 'F' ? 'selected' : ''}>°F</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>SpO2</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="vitals-input spo2-input" placeholder="เช่น 98" value="${item.spo2}">
+                                <span class="unit">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>Pain score</label>
+                            <div class="pain-score-container" style="margin-top: 2px;">
+                                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                    ${painButtonsHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function attachInputListeners(panelEl, item) {
+            const sysIn = panelEl.querySelector('.systolic-input');
+            const diaIn = panelEl.querySelector('.diastolic-input');
+            const prIn = panelEl.querySelector('.pr-input');
+            const rrIn = panelEl.querySelector('.rr-input');
+            const tempIn = panelEl.querySelector('.temp-input');
+            const tempUnitSel = panelEl.querySelector('.temp-unit-select');
+            const spo2In = panelEl.querySelector('.spo2-input');
+            
+            sysIn.addEventListener('input', (e) => { item.systolic = e.target.value; updateAddTabButtonState(); });
+            diaIn.addEventListener('input', (e) => { item.diastolic = e.target.value; updateAddTabButtonState(); });
+            prIn.addEventListener('input', (e) => { item.pr = e.target.value; updateAddTabButtonState(); });
+            rrIn.addEventListener('input', (e) => { item.rr = e.target.value; updateAddTabButtonState(); });
+            tempIn.addEventListener('input', (e) => { item.temp = e.target.value; updateAddTabButtonState(); });
+            tempUnitSel.addEventListener('change', (e) => { item.tempUnit = e.target.value; updateAddTabButtonState(); });
+            spo2In.addEventListener('input', (e) => { item.spo2 = e.target.value; updateAddTabButtonState(); });
+
+            panelEl.querySelectorAll('.pain-square-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    panelEl.querySelectorAll('.pain-square-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    item.painScore = btn.getAttribute('data-value');
+                    updateAddTabButtonState();
+                });
+            });
+        }
+
+        // Render the entire list of attachments
+        function renderAttachments() {
+            const listContainer = document.getElementById('attachmentList');
+            const emptyMsg = document.getElementById('emptyAttachmentsMsg');
+            
+            // Clear previous rows except empty message
+            const rows = listContainer.querySelectorAll('.attachment-row');
+            rows.forEach(r => r.remove());
+
+            if (attachmentsState.length === 0) {
+                emptyMsg.style.display = 'flex';
+                return;
+            } else {
+                emptyMsg.style.display = 'none';
+            }
+
+            attachmentsState.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'attachment-row';
+                row.setAttribute('data-id', item.id);
+
+                // Column 1: Searchable Dropdown
+                const colFormName = document.createElement('div');
+                colFormName.className = 'searchable-select-container';
+                colFormName.innerHTML = `
+                    <div class="searchable-select-input-wrapper">
+                        <input type="text" class="search-input" value="${item.formName}" placeholder="ค้นหาหรือเลือกฟอร์ม...">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+                        </svg>
+                    </div>
+                    <div class="searchable-select-dropdown"></div>
+                `;
+                
+                const inputWrapper = colFormName.querySelector('.searchable-select-input-wrapper');
+                const input = colFormName.querySelector('.search-input');
+                const dropdown = colFormName.querySelector('.searchable-select-dropdown');
+
+                // Toggle open dropdown
+                inputWrapper.addEventListener('click', (e) => {
+                    document.querySelectorAll('.searchable-select-container').forEach(c => {
+                        if (c !== colFormName) c.classList.remove('open');
+                    });
+                    colFormName.classList.toggle('open');
+                    filterOptions(input.value);
+                    e.stopPropagation();
+                });
+
+                input.addEventListener('focus', (e) => {
+                    document.querySelectorAll('.searchable-select-container').forEach(c => {
+                        if (c !== colFormName) c.classList.remove('open');
+                    });
+                    colFormName.classList.add('open');
+                    filterOptions(input.value);
+                    e.stopPropagation();
+                });
+
+                input.addEventListener('input', (e) => {
+                    colFormName.classList.add('open');
+                    item.formName = e.target.value;
+                    filterOptions(e.target.value);
+                });
+
+                // Click outside closes dropdowns
+                document.addEventListener('click', (e) => {
+                    if (!colFormName.contains(e.target)) {
+                        colFormName.classList.remove('open');
+                    }
+                });
+
+                function filterOptions(query) {
+                    dropdown.innerHTML = '';
+                    const filtered = formMasterList.filter(f => 
+                        f.toLowerCase().includes(query.toLowerCase())
+                    );
+
+                    if (filtered.length === 0) {
+                        dropdown.innerHTML = `<div class="searchable-select-no-results">ไม่พบข้อมูล "${query}"</div>`;
+                        return;
+                    }
+
+                    filtered.forEach(form => {
+                        const opt = document.createElement('div');
+                        opt.className = `searchable-select-option ${item.formName === form ? 'selected' : ''}`;
+                        opt.textContent = form;
+                        opt.addEventListener('click', (e) => {
+                            input.value = form;
+                            item.formName = form;
+                            colFormName.classList.remove('open');
+                            e.stopPropagation();
+                        });
+                        dropdown.appendChild(opt);
+                    });
+                }
+
+                // Column 2: Note with Counter
+                const colNote = document.createElement('div');
+                colNote.className = 'note-input-container';
+                colNote.innerHTML = `
+                    <textarea class="note-textarea" placeholder="ระบุโน๊ตสั้นๆ บันทึกเพิ่มเติม...">${item.note}</textarea>
+                    <div class="note-counter">${item.note.length} / 500</div>
+                `;
+                const textarea = colNote.querySelector('.note-textarea');
+                const counter = colNote.querySelector('.note-counter');
+                
+                function updateCounter(len) {
+                    counter.textContent = `${len} / 500`;
+                    counter.className = 'note-counter';
+                    if (len >= 450 && len < 500) {
+                        counter.classList.add('limit-near');
+                    } else if (len >= 500) {
+                        counter.classList.add('limit-reached');
+                    }
+                }
+                updateCounter(item.note.length);
+
+                textarea.addEventListener('input', (e) => {
+                    item.note = e.target.value;
+                    updateCounter(e.target.value.length);
+                });
+
+                // Column 3: Attach & Scan or File Card
+                const colFile = document.createElement('div');
+                colFile.className = 'file-action-container';
+                
+                if (item.file) {
+                    const isImg = item.file.type.startsWith('image/');
+                    const thumbnailHTML = isImg 
+                        ? `<img src="${item.file.dataUrl}" class="attached-file-thumbnail">`
+                        : `<svg class="attached-file-icon" width="16" height="16" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>`;
+
+                    colFile.innerHTML = `
+                        <div class="attached-file-card">
+                            <div class="attached-file-thumbnail-container" title="เปิดโปรแกรมวาดคำอธิบาย (Annotate)">
+                                ${thumbnailHTML}
+                            </div>
+                            <div class="attached-file-info">
+                                <div class="attached-file-name" title="${item.file.name}">${item.file.name}</div>
+                                <div class="attached-file-size">${item.file.size}</div>
+                            </div>
+                            <button class="btn-remove-file" title="ลบไฟล์แนบนี้">&times;</button>
+                        </div>
+                    `;
+                    
+                    colFile.querySelector('.attached-file-thumbnail-container').addEventListener('click', () => {
+                        openAnnotationModal(item.id);
+                    });
+
+                    colFile.querySelector('.btn-remove-file').addEventListener('click', () => {
+                        item.file = null;
+                        renderAttachments();
+                    });
+                } else {
+                    colFile.innerHTML = `
+                        <div class="upload-options-group">
+                            <button class="btn-action-small btn-primary-action btn-attach-trigger" type="button">
+                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                                </svg>
+                                แนบไฟล์
+                            </button>
+                            <button class="btn-action-small btn-scan-trigger" type="button">
+                                <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"></path>
+                                </svg>
+                                สแกน
+                            </button>
+                        </div>
+                        <input type="file" class="hidden-file-input" style="display: none;" accept="image/*,application/pdf">
+                    `;
+                    
+                    const fileInput = colFile.querySelector('.hidden-file-input');
+                    colFile.querySelector('.btn-attach-trigger').addEventListener('click', () => fileInput.click());
+                    
+                    fileInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(evt) {
+                            let sizeStr = (file.size / 1024).toFixed(1) + " KB";
+                            if (file.size > 1024 * 1024) sizeStr = (file.size / (1024 * 1024)).toFixed(1) + " MB";
+                            
+                            item.file = {
+                                name: file.name,
+                                size: sizeStr,
+                                type: file.type,
+                                dataUrl: evt.target.result
+                            };
+                            renderAttachments();
+                        };
+                        reader.readAsDataURL(file);
+                    });
+
+                    colFile.querySelector('.btn-scan-trigger').addEventListener('click', () => {
+                        currentScanningRowId = item.id;
+                        openScannerModal();
+                    });
+                }
+
+                // Column 4: Manage Actions (Delete row / Annotate icon)
+                const colManage = document.createElement('div');
+                colManage.style.display = 'flex';
+                colManage.style.gap = '4px';
+                colManage.style.justifyContent = 'center';
+
+                const isAnnotatable = item.file && (item.file.type.startsWith('image/') || item.file.type === 'application/pdf');
+                
+                colManage.innerHTML = `
+                    <button class="btn-row-action btn-annotate" type="button" title="วาดเขียนทับเอกสาร (Annotation)" ${isAnnotatable ? '' : 'disabled style="opacity: 0.25; cursor: not-allowed;"'}>
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                        </svg>
+                    </button>
+                    <button class="btn-row-action btn-delete-row" type="button" title="ลบรายการนี้">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"></path>
+                        </svg>
+                    </button>
+                `;
+
+                if (isAnnotatable) {
+                    colManage.querySelector('.btn-annotate').addEventListener('click', () => {
+                        openAnnotationModal(item.id);
+                    });
+                }
+
+                colManage.querySelector('.btn-delete-row').addEventListener('click', () => {
+                    attachmentsState.splice(index, 1);
+                    renderAttachments();
+                });
+
+                row.appendChild(colFormName);
+                row.appendChild(colNote);
+                row.appendChild(colFile);
+                row.appendChild(colManage);
+                listContainer.appendChild(row);
+            });
+        }
+
+        // Scanner Modal Controls
+        function openScannerModal() {
+            const modal = document.getElementById('scannerModal');
+            const fill = document.getElementById('scannerProgressFill');
+            const status = document.getElementById('scannerStatus');
+            const screen = document.getElementById('scannerScreen');
+            const btn = document.getElementById('btnStartScan');
+
+            fill.style.width = '0%';
+            status.textContent = 'พร้อมเชื่อมต่อเครื่องสแกนเอกสารจำลอง...';
+            screen.classList.remove('scanning');
+            btn.disabled = false;
+            btn.textContent = 'เริ่มสแกนเอกสาร';
+            
+            modal.classList.add('open');
+        }
+
+        function closeScannerModal() {
+            document.getElementById('scannerModal').classList.remove('open');
+        }
+
+        function startScanningProcess() {
+            const fill = document.getElementById('scannerProgressFill');
+            const status = document.getElementById('scannerStatus');
+            const screen = document.getElementById('scannerScreen');
+            const btn = document.getElementById('btnStartScan');
+
+            btn.disabled = true;
+            btn.textContent = 'กำลังทำงาน...';
+            screen.classList.add('scanning');
+
+            let progress = 0;
+            const intervalTime = 120; // total duration ~2.4 seconds
+            const totalSteps = 20;
+
+            const messages = [
+                "กำลังดึงเอกสารเข้ากระบวนการสแกน...",
+                "กำลังอ่านรหัสบาร์โค้ดฟอร์ม...",
+                "กำลังบันทึกภาพความละเอียดสูง 300 DPI...",
+                "ปรับคุณภาพแสงและคู่ความเข้มข้นดิจิทัล...",
+                "เสร็จสิ้นการสแกน กำลังส่งข้อมูลสำเร็จ..."
+            ];
+
+            const timer = setInterval(() => {
+                progress += 1;
+                const percentage = (progress / totalSteps) * 100;
+                fill.style.width = `${percentage}%`;
+
+                const msgIdx = Math.min(Math.floor(progress / (totalSteps / messages.length)), messages.length - 1);
+                status.textContent = messages[msgIdx];
+
+                if (progress >= totalSteps) {
+                    clearInterval(timer);
+                    
+                    // Scan Complete - Generate canvas document image
+                    generateMockScannedDocument((dataUrl) => {
+                        const scanName = `Scan_Report_${new Date().getTime().toString().slice(-5)}.png`;
+                        const item = attachmentsState.find(a => a.id === currentScanningRowId);
+                        
+                        if (item) {
+                            item.file = {
+                                name: scanName,
+                                size: "24.8 KB",
+                                type: "image/png",
+                                dataUrl: dataUrl,
+                                isMockScanned: true
+                            };
+                            renderAttachments();
+                        }
+                        
+                        setTimeout(() => {
+                            closeScannerModal();
+                        }, 300);
+                    });
+                }
+            }, intervalTime);
+        }
+
+        // Generate stylized medical report on temporary canvas
+        function generateMockScannedDocument(callback) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            // Background white paper
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Clinic header borders
+            ctx.strokeStyle = '#1e3a8a';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+            ctx.lineWidth = 1;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+            // Clinic logo
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath();
+            ctx.fillRect(60, 45, 16, 44);
+            ctx.fillRect(46, 59, 44, 16);
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 2;
+            ctx.arc(68, 67, 28, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            // Document Title
+            ctx.fillStyle = '#1e3a8a';
+            ctx.font = 'bold 20px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('ใบรายงานคัดกรองทางการแพทย์จำลอง', 120, 60);
+            ctx.font = '12px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillStyle = '#64748b';
+            ctx.fillText('โรงพยาบาลศูนย์บริการข้อมูลผู้ป่วยแผนกฉุกเฉิน (Mock Report)', 120, 80);
+
+            // Divider Line
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.beginPath();
+            ctx.moveTo(40, 110);
+            ctx.lineTo(560, 110);
+            ctx.stroke();
+
+            // Patient info fields
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 13px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('ข้อมูลผู้เข้ารับการตรวจ', 40, 140);
+            
+            ctx.font = '12px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillStyle = '#475569';
+            ctx.fillText('ชื่อ-นามสกุล: คนไข้ ตัวอย่างทดลอง', 40, 170);
+            ctx.fillText('HN: 99-88-776655', 320, 170);
+            ctx.fillText('อายุ: 34 ปี   เพศ: ชาย   สัญชาติ: ไทย', 40, 195);
+            ctx.fillText('วันที่สแกน: ' + new Date().toLocaleDateString('th-TH'), 320, 195);
+
+            // Table structure for Vital Signs
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(40, 230, 520, 160);
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.strokeRect(40, 230, 520, 160);
+
+            ctx.fillStyle = '#1e3a8a';
+            ctx.font = 'bold 12px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('พารามิเตอร์การวัด (Vital Signs)', 60, 255);
+            ctx.fillText('ค่าที่ได้จากเครื่องวัด (Screened Values)', 340, 255);
+
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.beginPath();
+            ctx.moveTo(40, 270);
+            ctx.lineTo(560, 270);
+            ctx.stroke();
+
+            // Data rows
+            ctx.fillStyle = '#334155';
+            ctx.font = '12px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('Blood Pressure (ความดันโลหิต)', 60, 295);
+            ctx.fillText('120 / 80 mmHg (ปกติ)', 340, 295);
+
+            ctx.fillText('Pulse Rate / PR (อัตราชีพจร)', 60, 320);
+            ctx.fillText('72 ครั้ง/นาที', 340, 320);
+
+            ctx.fillText('Respiratory Rate / RR (อัตราการหายใจ)', 60, 345);
+            ctx.fillText('16 ครั้ง/นาที', 340, 345);
+
+            ctx.fillText('Body Temperature (อุณหภูมิร่างกาย)', 60, 370);
+            ctx.fillText('36.5 °C', 340, 370);
+
+            // Checklist
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 13px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('การประเมินอาการเบื้องต้น', 40, 430);
+
+            ctx.font = '12px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillStyle = '#475569';
+            ctx.strokeRect(40, 455, 12, 12);
+            ctx.fillText('ไม่มีไข้สูงเกิน 38 องศาเซลเซียส', 60, 466);
+            
+            ctx.strokeRect(40, 485, 12, 12);
+            ctx.beginPath();
+            ctx.moveTo(40, 491);
+            ctx.lineTo(44, 495);
+            ctx.lineTo(50, 487);
+            ctx.stroke();
+            ctx.fillText('ผู้ป่วยสามารถเดินและทรงตัวได้ปกติ (Fall Risk ต่ำ)', 60, 496);
+
+            ctx.strokeRect(40, 515, 12, 12);
+            ctx.fillText('ไม่มีประวัติสัมผัสโรคติดต่อร้ายแรงในระยะ 14 วัน', 60, 526);
+
+            // Medical Note Block
+            ctx.fillStyle = '#f1f5f9';
+            ctx.fillRect(40, 560, 520, 80);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, 560, 520, 80);
+            ctx.fillStyle = '#64748b';
+            ctx.fillText('ข้อเขียนแพทย์: ตรวจสอบและคัดกรองเบื้องต้นปกติ แนะนำส่งห้องตรวจเวชปฏิบัติทั่วไป', 55, 605);
+
+            // Stamp & sign
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'italic 11px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('ลงชื่อ: ................................................................ ผู้คัดกรอง', 300, 690);
+            ctx.fillText('( พยาบาลวิชาชีพเวรคัดกรอง )', 350, 710);
+
+            // Circular Stamp
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.75)';
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.75)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(150, 690, 42, 0, 2 * Math.PI);
+            ctx.stroke();
+            ctx.font = 'bold 8px "Segoe UI", sans-serif';
+            ctx.fillText('MOCK SCANNER', 120, 683);
+            ctx.fillText('VERIFIED DOC', 123, 693);
+            ctx.fillText('HOSPITAL CENTER', 115, 703);
+
+            callback(canvas.toDataURL("image/png"));
+        }
+
+        // Annotation Modal Controls & Canvas drawing
+        function openAnnotationModal(rowId) {
+            currentAnnotatingRowId = rowId;
+            const item = attachmentsState.find(a => a.id === rowId);
+            if (!item || !item.file) return;
+
+            const modal = document.getElementById('annotationModal');
+            const canvas = document.getElementById('annotationCanvas');
+            const ctx = canvas.getContext('2d');
+
+            modal.classList.add('open');
+
+            originalImage = new Image();
+            originalImage.onload = function() {
+                const container = document.querySelector('.annotation-canvas-container');
+                const maxW = Math.min(container.clientWidth - 40, 700);
+                const maxH = 400;
+                
+                let w = originalImage.width;
+                let h = originalImage.height;
+
+                const scale = Math.min(maxW / w, maxH / h);
+                canvas.width = w * scale;
+                canvas.height = h * scale;
+
+                ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+                resetCanvasSettings();
+            };
+
+            if (item.file.type === 'application/pdf') {
+                generateMockPDFImage(item.file.name, (pdfDataUrl) => {
+                    originalImage.src = pdfDataUrl;
+                });
+            } else {
+                originalImage.src = item.file.dataUrl;
+            }
+        }
+
+        function generateMockPDFImage(fileName, callback) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            // PDF background
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+            // Red PDF header bar
+            ctx.fillStyle = '#b91c1c';
+            ctx.fillRect(10, 10, canvas.width - 20, 50);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 15px "Segoe UI", sans-serif';
+            ctx.fillText('PDF VIEW - PORTAL READ ONLY', 30, 42);
+            ctx.font = '12px "Segoe UI", sans-serif';
+            ctx.fillText('Page 1 of 1', 500, 40);
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 16px "Noto Sans Thai", "Segoe UI", sans-serif';
+            ctx.fillText('ไฟล์เอกสาร PDF: ' + fileName, 40, 100);
+
+            ctx.fillStyle = '#ef4444';
+            ctx.fillRect(40, 130, 60, 80);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px "Segoe UI", sans-serif';
+            ctx.fillText('PDF', 50, 180);
+
+            ctx.fillStyle = '#cbd5e1';
+            for (let i = 0; i < 15; i++) {
+                let y = 250 + (i * 30);
+                ctx.fillRect(40, y, canvas.width - 80, 8);
+            }
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillRect(40, 310, 300, 8);
+            ctx.fillRect(40, 430, 200, 8);
+            ctx.fillRect(40, 550, 400, 8);
+            ctx.fillRect(40, 670, 150, 8);
+
+            callback(canvas.toDataURL("image/png"));
+        }
+
+        function closeAnnotationModal() {
+            document.getElementById('annotationModal').classList.remove('open');
+        }
+
+        function resetCanvasSettings() {
+            const canvas = document.getElementById('annotationCanvas');
+            const ctx = canvas.getContext('2d');
+
+            isDrawing = false;
+            isEraser = false;
+            
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.color-btn[data-color="#ef4444"]').classList.add('active');
+            drawColor = '#ef4444';
+
+            document.querySelectorAll('.brush-size-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.brush-size-btn[data-size="3"]').classList.add('active');
+            drawSize = 3;
+
+            document.getElementById('btnEraser').classList.remove('active');
+
+            ctx.strokeStyle = drawColor;
+            ctx.lineWidth = drawSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        function setupAnnotationTools() {
+            const canvas = document.getElementById('annotationCanvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', drawing);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', (e) => {
+                startDraw(e);
+                e.preventDefault();
+            });
+            canvas.addEventListener('touchmove', (e) => {
+                drawing(e);
+                e.preventDefault();
+            });
+            canvas.addEventListener('touchend', (e) => {
+                stopDraw();
+                e.preventDefault();
+            });
+
+            function getCanvasCoordinates(e) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+
+                let clientX, clientY;
+                if (e.touches && e.touches.length > 0) {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                return {
+                    x: (clientX - rect.left) * scaleX,
+                    y: (clientY - rect.top) * scaleY
+                };
+            }
+
+            function startDraw(e) {
+                isDrawing = true;
+                const coords = getCanvasCoordinates(e);
+                lastX = coords.x;
+                lastY = coords.y;
+
+                ctx.beginPath();
+                ctx.arc(lastX, lastY, ctx.lineWidth / 2, 0, 2 * Math.PI);
+                ctx.fillStyle = ctx.strokeStyle;
+                ctx.fill();
+            }
+
+            function drawing(e) {
+                if (!isDrawing) return;
+                const coords = getCanvasCoordinates(e);
+
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(coords.x, coords.y);
+                ctx.stroke();
+
+                lastX = coords.x;
+                lastY = coords.y;
+            }
+
+            function stopDraw() {
+                isDrawing = false;
+            }
+
+            // Colors
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    isEraser = false;
+                    document.getElementById('btnEraser').classList.remove('active');
+                    document.querySelectorAll('.color-btn').forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    drawColor = btn.getAttribute('data-color');
+                    ctx.strokeStyle = drawColor;
+                    e.stopPropagation();
+                });
+            });
+
+            // Sizes
+            document.querySelectorAll('.brush-size-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.brush-size-btn').forEach(s => s.classList.remove('active'));
+                    btn.classList.add('active');
+                    drawSize = parseInt(btn.getAttribute('data-size'));
+                    ctx.lineWidth = drawSize;
+                    e.stopPropagation();
+                });
+            });
+
+            // Eraser
+            document.getElementById('btnEraser').addEventListener('click', (e) => {
+                isEraser = true;
+                document.querySelectorAll('.color-btn').forEach(c => c.classList.remove('active'));
+                document.getElementById('btnEraser').classList.add('active');
+                ctx.strokeStyle = '#ffffff'; // draws white
+                e.stopPropagation();
+            });
+
+            // Clear Canvas
+            document.getElementById('btnClearCanvas').addEventListener('click', () => {
+                if (originalImage) {
+                    ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+                }
+            });
+
+            // Save Canvas
+            document.getElementById('btnSaveAnnotation').addEventListener('click', () => {
+                const item = attachmentsState.find(a => a.id === currentAnnotatingRowId);
+                if (item) {
+                    const dataUrl = canvas.toDataURL("image/png");
+                    
+                    let name = item.file.name;
+                    if (!name.includes('_annotated')) {
+                        const dot = name.lastIndexOf('.');
+                        name = dot !== -1 ? name.slice(0, dot) + '_annotated.png' : name + '_annotated.png';
+                    }
+
+                    item.file = {
+                        name: name,
+                        size: item.file.size,
+                        type: "image/png",
+                        dataUrl: dataUrl
+                    };
+                    renderAttachments();
+                }
+                closeAnnotationModal();
+            });
+        }
+
+        // Setup save form alert
+        function setupSaveButton() {
+            // Hook up use latest vitals button
+            const btnUseLatestVitals = document.getElementById('btnUseLatestVitals');
+            if (btnUseLatestVitals) {
+                btnUseLatestVitals.addEventListener('click', () => {
+                    const activeVitals = vitalsState.find(v => v.id === activeVitalsTabId);
+                    if (activeVitals) {
+                        activeVitals.systolic = '118';
+                        activeVitals.diastolic = '78';
+                        activeVitals.pr = '74';
+                        activeVitals.rr = '16';
+                        activeVitals.temp = '36.6';
+                        activeVitals.tempUnit = 'C';
+                        activeVitals.spo2 = '99';
+                        activeVitals.painScore = '0';
+                        
+                        const activePanel = document.querySelector(`[data-tab-content-id="${activeVitalsTabId}"]`);
+                        if (activePanel) {
+                            activePanel.querySelector('.systolic-input').value = '118';
+                            activePanel.querySelector('.diastolic-input').value = '78';
+                            activePanel.querySelector('.pr-input').value = '74';
+                            activePanel.querySelector('.rr-input').value = '16';
+                            activePanel.querySelector('.temp-input').value = '36.6';
+                            activePanel.querySelector('.temp-unit-select').value = 'C';
+                            activePanel.querySelector('.spo2-input').value = '99';
+                            
+                            activePanel.querySelectorAll('.pain-square-btn').forEach(b => {
+                                if (b.getAttribute('data-value') === '0') {
+                                    b.classList.add('active');
+                                } else {
+                                    b.classList.remove('active');
+                                }
+                            });
+                        }
+                        updateAddTabButtonState();
+                    }
+                });
+            }
+
+            const saveBtn = document.querySelector('.btn-save');
+            if (!saveBtn) return;
+
+            saveBtn.addEventListener('click', () => {
+                // Collect summary
+                let triageVal = "ไม่ได้ระบุ";
+                const selectedTriage = document.querySelector('input[name="triage"]:checked');
+                if (selectedTriage) {
+                    const triageLabels = {
+                        "1": "(1) Resuscitation",
+                        "2": "(2) Emergency",
+                        "3": "(3) Urgent",
+                        "4": "(4) Semi-Urgent",
+                        "5": "(5) Non-Urgent"
+                    };
+                    triageVal = triageLabels[selectedTriage.value] || selectedTriage.value;
+                }
+
+                // Collect Vitals from all tabs
+                let vitalsSummary = [];
+                vitalsState.forEach((item, idx) => {
+                    let singleVitals = [];
+                    if (item.systolic) singleVitals.push(`BP ${item.systolic}/${item.diastolic || ''}`);
+                    if (item.pr) singleVitals.push(`PR ${item.pr}`);
+                    if (item.rr) singleVitals.push(`RR ${item.rr}`);
+                    if (item.temp) singleVitals.push(`T ${item.temp}°${item.tempUnit}`);
+                    if (item.spo2) singleVitals.push(`SpO2 ${item.spo2}%`);
+                    if (item.painScore !== 'unspecified') singleVitals.push(`Pain ${item.painScore}`);
+
+                    if (singleVitals.length > 0) {
+                        vitalsSummary.push(`ครั้งที่ ${idx + 1}: [${singleVitals.join(', ')}]`);
+                    }
+                });
+
+                let diseases = [];
+                document.querySelectorAll('input[name="disease"]:checked').forEach(cb => {
+                    const span = cb.parentElement.querySelector('span');
+                    if (span) diseases.push(span.textContent);
+                });
+
+                document.getElementById('summaryTriage').textContent = triageVal;
+                
+                const triageColorMap = {
+                    "1": "var(--triage-1)",
+                    "2": "var(--triage-2)",
+                    "3": "var(--triage-3)",
+                    "4": "var(--triage-4)",
+                    "5": "var(--triage-5)"
+                };
+                if (selectedTriage) {
+                    document.getElementById('summaryTriage').style.color = triageColorMap[selectedTriage.value];
+                }
+
+                document.getElementById('summaryVitals').innerHTML = vitalsSummary.length > 0 
+                    ? vitalsSummary.join('<br>') 
+                    : 'ไม่มีข้อมูล';
+                document.getElementById('summaryDiseases').textContent = diseases.join(', ') || 'ไม่มีประวัติ';
+
+                const summaryAttList = document.getElementById('summaryAttachments');
+                summaryAttList.innerHTML = '';
+                
+                const non_empty_attachments = attachmentsState.filter(item => 
+                    (item.formName && item.formName.trim() !== '') || item.file || (item.note && item.note.trim() !== '')
+                );
+
+                if (non_empty_attachments.length === 0) {
+                    summaryAttList.textContent = '- ไม่มีเอกสารแนบ -';
+                } else {
+                    non_empty_attachments.forEach((item, idx) => {
+                        const name = item.formName || '(ไม่ได้ระบุชื่อฟอร์ม)';
+                        const fileDesc = item.file ? `📎 ${item.file.name} (${item.file.size})` : '❌ ไม่มีไฟล์';
+                        const div = document.createElement('div');
+                        div.textContent = `${idx + 1}. ${name} -> ${fileDesc}`;
+                        summaryAttList.appendChild(div);
+                    });
+                }
+
+                // Show Success Modal
+                document.getElementById('successModal').classList.add('open');
+                
+                // Update status in header bar to saved
+                const statusText = document.querySelector('.status-text');
+                if (statusText) {
+                    statusText.innerHTML = `
+                        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style="color: #10b981; margin-right: 4px; display: inline-block; vertical-align: text-bottom;">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                        บันทึกสำเร็จแล้ว
+                    `;
+                }
+            });
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.remove('open');
+        }
+
+        function setupChiefComplaintTags() {
+            const ccTextarea = document.getElementById('ccTextarea');
+            if (!ccTextarea) return;
+            
+            const tags = document.querySelectorAll('.cc-tags .cc-tag');
+            tags.forEach(tag => {
+                tag.addEventListener('click', () => {
+                    const currentVal = ccTextarea.value.trim();
+                    const tagVal = tag.textContent.trim();
+                    
+                    if (currentVal) {
+                        ccTextarea.value = currentVal + ', ' + tagVal;
+                    } else {
+                        ccTextarea.value = tagVal;
+                    }
+                    ccTextarea.dispatchEvent(new Event('input'));
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
